@@ -27,8 +27,13 @@
 
     # always loaded
     'data': [
-        'views/assets.xml',
+        # 'views/assets.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'syd_history_back/static/src/js/syd_history_back.js',
+        ],
+    },
     
     'auto_install': False,
 }
