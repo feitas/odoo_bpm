@@ -10,7 +10,8 @@ import time
 class IrActionsServer(models.Model):
     _inherit = 'ir.actions.server'
     
-    state= fields.Selection(selection_add=[("process", "Launch BPM Process"),("activity", "Complete BPM Activity")])
+    state= fields.Selection(selection_add=[("process", "Launch BPM Process"),("activity", "Complete BPM Activity")],
+        default='object_write', required=True, copy=True, ondelete={'process': 'set default', 'activity': 'set default'})
     process_id = fields.Many2one('syd_bpm.process', string='Process')
     user_id = fields.Many2one('res.users', string='User')
     activity_id = fields.Many2one('syd_bpm.activity', string='BPM Activity')

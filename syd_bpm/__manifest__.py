@@ -33,7 +33,7 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
-        'views/assets.xml',
+
         'views/views.xml',
         'wizard/views.xml',
         'wizard/act_window.xml',
@@ -41,6 +41,13 @@
         'views/menu.xml',
         
     ],
+    'assets': {
+        'web.assets_backend': [
+            'syd_bpm/static/src/js/bpm_graph_view.js',
+            'syd_bpm/static/src/js/bpm_pivot_view.js',
+            'syd_bpm/static/src/js/bpm_view_registry.js',
+        ],
+    },
     'installable': True,
     'application': True,
 }
