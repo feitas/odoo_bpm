@@ -13,11 +13,15 @@
     ],
 
     'data': [
-        'views/views.xml',
+
         'views/process_view.xml',
 
     ],
-
+    'assets': {
+        'web.assets_backend': [
+            'utm/static/src/**/*',
+        ],
+    },
     'qweb': [
         'static/src/xml/template.xml', ],
     'installable': True,
