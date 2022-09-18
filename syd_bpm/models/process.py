@@ -170,7 +170,7 @@ class BPMInterface:
         """
         pass
     
-class ProcessGroup(models.Model):
+class ProcessGroup(BPMInterface,models.Model):
     _name = 'syd_bpm.process_group'
     _description = 'Process Group'
     _inherit = ['mail.thread']

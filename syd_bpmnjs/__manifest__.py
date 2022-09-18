@@ -19,7 +19,8 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'utm/static/src/**/*',
+            'syd_bpmnjs/static/src/css/*',
+            'syd_bpmnjs/static/src/js/*',
         ],
     },
     'qweb': [
