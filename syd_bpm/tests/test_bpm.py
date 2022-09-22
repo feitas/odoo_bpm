@@ -4,7 +4,7 @@
 
 from odoo.tests import common
 
-class TestBpm(common.SavepointCase):
+class TestBpm(common.TransactionCase):
     
     @classmethod
     def setUpClass(cls):
