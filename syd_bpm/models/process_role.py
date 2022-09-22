@@ -32,6 +32,7 @@ class ProcessRole(models.Model):
 class ProcessRoleActivity(models.Model):
     _name = 'syd_bpm.process_role_activity'
     _description = 'Business Process Manager Role Activity'
+    _inherit = ['mail.thread']
 
     
     name = fields.Char(string='Name',related="process_role_id.name")
@@ -41,7 +42,7 @@ class ProcessRoleActivity(models.Model):
                 ('random', "Random"),
                 ('less-activity',"User with less process activity"),
                 ('first-of-role',"First of Role")
-            ], default='first-of-role',track_visibility='onchange',required=True)
+            ], default='first-of-role',tracking=True,required=True)
     
     
     def get_user(self):
