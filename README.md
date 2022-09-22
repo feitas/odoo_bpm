@@ -3,7 +3,7 @@
 
 # Business Process Management odoo app
 
-B.P.M. is an integration between <a href="http://www.odoo.com">odoo</a> (12) and <a href="https://www.processmaker.com/">ProcessMaker</a> (3.2)
+B.P.M. is an integration between <a href="http://www.odoo.com">odoo</a> (15) and <a href="https://www.processmaker.com/">ProcessMaker</a> (4)
 
 
 ## Installation

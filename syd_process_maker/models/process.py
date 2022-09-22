@@ -40,7 +40,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 'username': self.pm_username,
                 'password': self.pm_password
         }
-        result = requests.post(self.pm_url+"/"+self.pm_workspace+'/oauth2/token', data=auth)
+        result = requests.post(self.pm_url+'/oauth/token', data=auth)
         if (not result.ok  ):
             raise ValidationError('{}, {}'.format(result.status_code, result.text))
         jsonresult = json.loads(result.content)
@@ -52,7 +52,7 @@ class ProcessGroup(BPMInterface,models.Model):
         
         endresult = ''
         if (method == 'GET'):
-            endresult = requests.get(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,params =jsonobject,headers=headers )
+            endresult = requests.get(self.pm_url+'/api/1.0/'+request,params =jsonobject,headers=headers )
         if (method == 'POST'):
             endresult = requests.post(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
         if (method == 'PUT'):
@@ -61,7 +61,9 @@ class ProcessGroup(BPMInterface,models.Model):
             raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
         if bool(endresult.content): 
             if 'json' in endresult.headers['Content-Type']:
-                return json.loads(endresult.content) 
+                _res = json.loads(endresult.content) 
+                print(_res)
+                return _res
             else :
                 return endresult.content
         else: 
