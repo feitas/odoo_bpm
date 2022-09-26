@@ -57,15 +57,8 @@
       <field name="arch" type="xml">
         <form string="Process Group">
           <sheet>
-
-            <div class="oe_button_box" name="button_box">
-
-
-
-
-            </div>
+            <div class="oe_button_box" name="button_box"></div>
             <group>
-
               <field name="name"/>
               <field name="description"/>
               <field name="type"/>
