@@ -179,7 +179,7 @@ class ProcessGroup(BPMInterface,models.Model):
     description = fields.Char(string='Description')
     last_update = fields.Datetime(string='Last Update')
     process_ids = fields.One2many('syd_bpm.process','process_group_id',string="Processes")    
-    type=fields.Selection([],string='Type')
+    type=fields.Selection([('ProcessMaker2','ProcessMaker2'),('ProcessMaker3','ProcessMaker3'),('ProcessMaker4','ProcessMaker4')],string='Type',default='ProcessMaker4')
     
 
 class ProcessCategory(models.Model):
@@ -264,6 +264,7 @@ class Activity(models.Model):
     _name = 'syd_bpm.activity'
     _description = 'Activity'
     _table = 'syd_bpm_activity'
+    _inherit = ['mail.thread']
     
     sequence = fields.Integer('Sequence')
     name = fields.Char(string='Name',required=True)
@@ -278,7 +279,7 @@ class Activity(models.Model):
                 ('process-role',"Process Role"),
                 ('automated', "Automated"),
                 ('sub-process',"Sub Process"),
-            ], default='user-case',track_visibility='onchange',required=True)
+            ], default='user-case',tracking=True,required=True)
     action = fields.Many2one('ir.actions.server',string='Action')
     sub_process_id = fields.Many2one('syd_bpm.process',string='Sub Process')
     deprecated = fields.Boolean('Deprecated',default=False)
