@@ -34,7 +34,7 @@ class ProcessGroup(BPMInterface,models.Model):
     def _call(self,request,jsonobject=dict(),method='GET'):
         auth = {
                 'grant_type': 'password',
-                'scope': '  ',
+                'scope': '*',
                 'client_id': self.pm_client_id,
                 'client_secret': self.pm_client_secret,
                 'username': self.pm_username,
