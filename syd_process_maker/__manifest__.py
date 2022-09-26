@@ -15,7 +15,7 @@
         
          
     """,
-
+    'license': 'LGPL-3',
     'author': "SayDigital",
     'website': "http://www.saydigital.it",
 
