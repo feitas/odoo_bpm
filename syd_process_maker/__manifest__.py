@@ -30,6 +30,7 @@
     'data': [
         
         'views/views.xml',
+        'views/process_views.xml',
         
     ],
     'installable': True,

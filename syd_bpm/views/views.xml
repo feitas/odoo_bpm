@@ -108,8 +108,9 @@
       <field name="model">syd_bpm.process</field>
       <field name="arch" type="xml">
         <form string="Process">
+          <header>
+          </header>
           <sheet>
-
             <group>
               <field name="name"/>
               <field name="category_id"/>
@@ -118,7 +119,7 @@
               <field name="priority_id" />
               <field name="startable" />
               <field name="process_group_id" />
-
+              <field name="start_events" />
             </group>
 
             <notebook>

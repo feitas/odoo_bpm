@@ -57,7 +57,7 @@ class ProcessGroup(BPMInterface,models.Model):
         if (method == 'GET'):
             endresult = requests.get(self.pm_url+'/api/1.0/'+request,params =jsonobject,headers=headers )
         if (method == 'POST'):
-            endresult = requests.post(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
+            endresult = requests.post(self.pm_url+'/api/1.0/'+request,params =jsonobject ,headers=headers)
         if (method == 'PUT'):
             endresult = requests.put(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
         _logger.warning(endresult)
@@ -210,11 +210,10 @@ class ProcessGroup(BPMInterface,models.Model):
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
-        pm_activity_id = activity_id.pm_activity_id
         par = dict()
-        par['pro_uid'] = pm_process_id
-        par['tas_uid'] = pm_activity_id
-        res = self._call('cases',par,method='POST')
+        par['process_id'] = int(pm_process_id)
+        par['event'] = 'node_1'
+        res = self._call('process_events/%s' % pm_process_id, par, method='POST')
         
         return res
     
@@ -227,7 +226,7 @@ class ProcessGroup(BPMInterface,models.Model):
             for process in process_list:
                 process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',process['id'])],limit=1)
                 if not process_id or not process_id.locked:
-#                     map = self._get_process_map(process['prj_uid'])
+#                   map = self._get_process_map(process['prj_uid'])
                     pm_category = False
                     if process['process_category_id'] != '':
                         pm_category = self._get_category_info(int(process['process_category_id']))['name']
@@ -244,6 +243,7 @@ class ProcessGroup(BPMInterface,models.Model):
                     else :
                         process_id.name=process['name']
                         process_id.description = process['description']
+                        process_id.start_events = str(process['start_events'])
                         process_id.category_id=self.env['syd_bpm.process_category'].get_or_create_category(pm_category)
 
 
@@ -265,7 +265,7 @@ class ProcessGroup(BPMInterface,models.Model):
                     request_id.process_id = process_id.id
                     request_id.user_id = request['user_id']
                     request_id.pm_activity_id = request['id']
-                    
+
             pgroup.last_update = fields.Datetime.now()
 
             return True
@@ -336,8 +336,10 @@ class Process(models.Model):
     _inherit = 'syd_bpm.process'
     
     
-    pm_process_id = fields.Char(string='Process Maker ID',required=False) 
+    pm_process_id = fields.Char(string='Process Maker ID',required=False)
 
+    def test_create_new_process(self):
+        self.process_group_id.start_process(self, None)
 
    
 class Activity(models.Model):
