@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.actions.server" id="action_new_process">
+        <field name="name">Create new process</field>
+        <field name="model_id" ref="syd_bpm.model_syd_bpm_process"/>
+        <field name="binding_model_id" ref="syd_bpm.model_syd_bpm_process"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_totp_disable()
+        </field>
+        <field name="groups_id" eval="[(4, ref('base.group_erp_manager'))]"/>
+    </record>
+</odoo>

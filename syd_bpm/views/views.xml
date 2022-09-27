@@ -57,15 +57,8 @@
       <field name="arch" type="xml">
         <form string="Process Group">
           <sheet>
-
-            <div class="oe_button_box" name="button_box">
-
-
-
-
-            </div>
+            <div class="oe_button_box" name="button_box"></div>
             <group>
-
               <field name="name"/>
               <field name="description"/>
               <field name="type"/>
@@ -115,8 +108,9 @@
       <field name="model">syd_bpm.process</field>
       <field name="arch" type="xml">
         <form string="Process">
+          <header>
+          </header>
           <sheet>
-
             <group>
               <field name="name"/>
               <field name="category_id"/>
@@ -125,7 +119,7 @@
               <field name="priority_id" />
               <field name="startable" />
               <field name="process_group_id" />
-
+              <field name="start_events" />
             </group>
 
             <notebook>

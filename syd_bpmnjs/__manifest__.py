@@ -6,7 +6,7 @@
     'author': '',
     'maintainer': '',
     'website': '',
-    'license': '',
+    'license': 'LGPL-3',
 
     'depends': [
         'web', 'syd_bpm'

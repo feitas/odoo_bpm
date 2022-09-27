@@ -234,6 +234,7 @@ class Process(models.Model):
     
     dynamic_form_ids = fields.One2many('syd_bpm.dynamic_form','process_id',string='Dynamic form')
     process_role_ids = fields.Many2many('syd_bpm.process_role',string='Process Roles', compute='_compute_process_role_ids')
+    start_events = fields.Char()
     
 
     @api.depends('activity_ids')

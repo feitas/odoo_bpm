@@ -11,7 +11,7 @@
     'description': """
         With this module you can give a name to a note
     """,
-
+    'license': 'LGPL-3',
     'author': "saydigital",
     'website': "http://www.saydigital.it",
 

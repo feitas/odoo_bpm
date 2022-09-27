@@ -15,7 +15,7 @@
         
          
     """,
-
+    'license': 'LGPL-3',
     'author': "SayDigital",
     'website': "http://www.saydigital.it",
 
@@ -30,6 +30,7 @@
     'data': [
         
         'views/views.xml',
+        'views/process_views.xml',
         
     ],
     'installable': True,
