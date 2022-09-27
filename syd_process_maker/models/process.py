@@ -51,9 +51,6 @@ class ProcessGroup(BPMInterface,models.Model):
         headers = {'Authorization': 'Bearer '+access_token}
         
         endresult = ''
-        _logger.warning(method)
-        _logger.warning(request)
-        _logger.warning(jsonobject)
         if (method == 'GET'):
             endresult = requests.get(self.pm_url+'/api/1.0/'+request,params =jsonobject,headers=headers )
         if (method == 'POST'):
@@ -89,6 +86,11 @@ class ProcessGroup(BPMInterface,models.Model):
         request_definition = self._call('requests')
         requests = request_definition['data']
         return requests
+
+    @api.model
+    def _get_group_list(self):
+        group_definition = self._call('groups')
+        return group_definition['data']
 
     @api.model
     def _get_starting_activity(self,process_id):
@@ -224,6 +226,7 @@ class ProcessGroup(BPMInterface,models.Model):
             pm_user_id = self._get_assign_user()
             process_list = self._get_process_list()
             request_list = self._get_request_list()
+            role_list = self._get_group_list()
             for process in process_list:
                 process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',process['id'])],limit=1)
                 if not process_id or not process_id.locked:
@@ -326,6 +329,9 @@ class ProcessGroup(BPMInterface,models.Model):
                         request_id.process_id = process_id.id
                         request_id.user_id = request['user_id']
                         request_id.pm_activity_id = request['id']
+            for role in role_list:
+                role_id = self.env['syd_bpm.process_role'].get_or_create_process_role(role['name'])
+
             pgroup.last_update = fields.Datetime.now()
 
             return True
