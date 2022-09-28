@@ -40,6 +40,10 @@
       <field name="model">syd_bpm.activity</field>
       <field name="inherit_id" ref="syd_bpm.activity_form_view"/>
       <field name="arch" type="xml">
+        <xpath expr="//sheet" position="before">
+          <button name="start_activity" type="object" string="Start"/>
+          <field name="status" widget="statusbar"/>
+        </xpath>
         <xpath expr="//field[@name='process_id']" position="after">
           <field name="pm_activity_id"/>
         </xpath>
