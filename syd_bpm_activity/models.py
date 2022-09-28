@@ -23,13 +23,13 @@ class Note(models.Model):
             activity_type_id = self.env['ir.config_parameter'].get_param('syd_bpm.activity_type_id')
             if not bool(activity_type_id):
                 raise ValidationError('Default Activity Type is not defined. Contact the Administrator')
-            self.env['mail.activity'].create({
-                                              'date_deadline':date_deadline,
-                                              'user_id':res.user_id.id,
-                                              'res_model_id':model_id.id,
-                                              'res_id':res.id,
-                                              'activity_type_id':activity_type_id,
-                                              'note':res.memo,
-                                              'summary':res.name
-                                              })
+            # self.env['mail.activity'].create({
+            #                                   'date_deadline':date_deadline,
+            #                                   'user_id':res.user_id.id,
+            #                                   'res_model_id':model_id.id,
+            #                                   'res_id':res.id,
+            #                                   'activity_type_id':activity_type_id,
+            #                                   'note':res.memo,
+            #                                   'summary':res.name
+            #                                   })
         return res
