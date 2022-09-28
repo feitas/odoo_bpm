@@ -57,7 +57,6 @@ class ProcessGroup(BPMInterface,models.Model):
             endresult = requests.post(self.pm_url+'/api/1.0/'+request,params =jsonobject ,headers=headers)
         if (method == 'PUT'):
             endresult = requests.put(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
-        _logger.warning(endresult)
         if (not bool(endresult) or not endresult.ok):
             raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
         if bool(endresult.content): 
@@ -91,6 +90,13 @@ class ProcessGroup(BPMInterface,models.Model):
     def _get_group_list(self):
         group_definition = self._call('groups')
         return group_definition['data']
+        
+    @api.model
+    def _get_process_request_list(self, process_id):
+        par = {'filter': process_id.name}
+        request_definition = self._call('requests',par)
+        requests = request_definition['data']
+        return requests
 
     @api.model
     def _get_starting_activity(self,process_id):
@@ -212,11 +218,30 @@ class ProcessGroup(BPMInterface,models.Model):
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
-        par = dict()
-        par['process_id'] = int(pm_process_id)
-        par['event'] = 'node_1'
-        res = self._call('process_events/%s' % pm_process_id, par, method='POST')
-        
+        par = {'process_id': int(pm_process_id), 'event': 'node_1'}
+        res = self._call(f'process_events/{pm_process_id}', par, method='POST')
+        process_id.name=res['name']
+        process_id.pm_process_id=res.get('process_id')
+        process_id.description = res.get('process')['description']
+        process_id.start_events = str(res)
+        request_list = self._get_process_request_list(process_id)
+        for request in request_list:
+            request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id.id))],limit=1)
+            if not request_id:
+                request_id = self.env['syd_bpm.activity'].create(
+                                        {'name':request['name'],
+                                        'type':'user-case',
+                                        'process_id':process_id.id,
+                                        'user_id':request['user_id'],
+                                        'pm_activity_id':request['id'],
+                                        'status':request['status'],
+                                        }
+                                        )
+            else:
+                request_id.name=request['name']
+                request_id.process_id = process_id.id
+                request_id.user_id = request['user_id']
+                request_id.pm_activity_id = request['id']
         return res
     
     
@@ -328,24 +353,6 @@ class ProcessGroup(BPMInterface,models.Model):
                 #     if (not starting_activities ) :
                 #         process.startable = False
                 #         acts.is_start_activity = False
-                for request in request_list:
-                    process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',request['process_id'])],limit=1)
-                    request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id))],limit=1)
-                    if not request_id:
-                        request_id = self.env['syd_bpm.activity'].create(
-                                                {'name':request['name'],
-                                                'type':'user-case',
-                                                'process_id':process_id.id,
-                                                'user_id':request['user_id'],
-                                                'pm_activity_id':request['id'],
-                                                'status':request['status'],
-                                                }
-                                                )
-                    else:
-                        request_id.name=request['name']
-                        request_id.process_id = process_id.id
-                        request_id.user_id = request['user_id']
-                        request_id.pm_activity_id = request['id']
             for role in role_list:
                 role_id = self.env['syd_bpm.process_role'].get_or_create_process_role(role['name'])
 

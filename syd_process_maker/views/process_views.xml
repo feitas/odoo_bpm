@@ -6,11 +6,12 @@
             <field name="inherit_id" ref="syd_bpm.process_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
-                    <button name="test_create_new_process" class="oe_highlight" type="object" string="Test New Process" ></button>
+                    <button name="test_create_new_process" class="oe_highlight" type="object" string="Test New Process"></button>
                 </xpath>
+                <field name="process_group_id" position="after">
+                    <field name="pm_process_id"/>
+                </field>
             </field>
         </record>
-
-
     </data>
 </odoo>
