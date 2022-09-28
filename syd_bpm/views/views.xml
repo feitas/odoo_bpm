@@ -861,6 +861,7 @@
           <sheet>
             <group>
               <field name="name"/>
+              <field name="process_id"/>
               <field name="process_user_ids">
                 <tree editable="bottom">
                   <field name="sequence" widget="handle" />

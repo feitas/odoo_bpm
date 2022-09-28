@@ -51,9 +51,6 @@ class ProcessGroup(BPMInterface,models.Model):
         headers = {'Authorization': 'Bearer '+access_token}
         
         endresult = ''
-        _logger.warning(method)
-        _logger.warning(request)
-        _logger.warning(jsonobject)
         if (method == 'GET'):
             endresult = requests.get(self.pm_url+'/api/1.0/'+request,params =jsonobject,headers=headers )
         if (method == 'POST'):
@@ -89,6 +86,11 @@ class ProcessGroup(BPMInterface,models.Model):
         request_definition = self._call('requests')
         requests = request_definition['data']
         return requests
+
+    @api.model
+    def _get_group_list(self):
+        group_definition = self._call('groups')
+        return group_definition['data']
 
     @api.model
     def _get_starting_activity(self,process_id):
@@ -223,6 +225,7 @@ class ProcessGroup(BPMInterface,models.Model):
             pm_user_id = self._get_assign_user()
             process_list = self._get_process_list()
             request_list = self._get_request_list()
+            role_list = self._get_group_list()
             for process in process_list:
                 process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',process['id'])],limit=1)
                 if not process_id or not process_id.locked:
@@ -265,6 +268,86 @@ class ProcessGroup(BPMInterface,models.Model):
                     request_id.process_id = process_id.id
                     request_id.user_id = request['user_id']
                     request_id.pm_activity_id = request['id']
+
+
+                #     activity_list = self._get_activity_list(process_id.pm_process_id)
+                #     act_not_to_delete = []
+                #     for activity in activity_list :
+
+                #         activity_id = self.env['syd_bpm.activity'].search([('pm_activity_id','=',activity['act_uid'])],limit=1)
+
+                #         activity_info = self._get_activity_info(process_id.pm_process_id,activity['act_uid'])
+                #         if (not activity_id) :
+                #             activity_id = self.env['syd_bpm.activity'].create(
+                #                                            {'name':activity['act_name'],
+                #                                             'description' : activity_info['properties']['tas_description'],
+                #                                             'process_id':process_id.id,
+                #                                             'pm_activity_id':activity['act_uid']
+                #                                             }
+                #                                            )
+                #         else :
+                #             activity_id.name = activity['act_name']
+                #             activity_id.description = activity_info['properties']['tas_description']
+                #             activity_id.is_start_activity = False
+
+                #         # Assign to a pm user the task if it is unassigned
+                #         users = self._get_user_of_task(process_id.pm_process_id,activity['act_uid'])
+                #         if not (bool(users)):
+                #             self._assign_user_to_task(process_id.pm_process_id,activity['act_uid'],pm_user_id)
+                #         act_not_to_delete.insert(0,activity_id.id)
+                #     act_to_delete = self.env['syd_bpm.activity'].search([('process_id','=',process_id.id),('id','not in',act_not_to_delete)])
+                #     for act in act_to_delete:
+                #         act.deprecated = True
+
+                #     process_variables = self._get_process_variables(process_id.pm_process_id)
+                #     var_not_to_delete = []
+                #     for pvariable in process_variables:
+                #         process_object_id = self.env['syd_bpm.process_object'].search([('pm_variable_id','=',pvariable['var_uid'])],limit=1)
+                #         if process_object_id:
+                #             process_object_id.name = pvariable['var_name']
+                #             process_object_id.pm_accepted_values = pvariable['var_accepted_values']
+                #             process_object_id.pm_type = pvariable['var_field_type']
+
+                #         else:
+                #             self.env['syd_bpm.process_object'].create({
+                #                                                  'name':pvariable['var_name'],
+                #                                                  'pm_variable_id':pvariable['var_uid'],
+                #                                                  'pm_accepted_values':pvariable['var_accepted_values'],
+                #                                                  'process_id':process_id.id,
+                #                                                  'pm_type':pvariable['var_field_type']
+                #                                                  })
+                #             process_object_id = self.env['syd_bpm.process_object'].search([('pm_variable_id','=',pvariable['var_uid'])],limit=1)
+                #         var_not_to_delete.insert(0,process_object_id.id)
+                #     for pv in self.env['syd_bpm.process_object'].search([('process_id','=','process_id.id'),('id','not in',var_not_to_delete)]):
+                #         pv.deprecated = True
+                # starting_activities = self._get_starting_activity(process_id.pm_process_id)
+                # for activity in starting_activities :
+                #     act = self.env['syd_bpm.activity'].search([('pm_activity_id','=',activity['act_uid'])],limit=1)
+                #     act.is_start_activity = True
+                #     acts = self.env['syd_bpm.activity'].search([('process_id','=',process_id.id),('is_start_activity','=',True)])
+                #     if (not starting_activities ) :
+                #         process.startable = False
+                #         acts.is_start_activity = False
+                for request in request_list:
+                    process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',request['process_id'])],limit=1)
+                    request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id))],limit=1)
+                    if not request_id:
+                        request_id = self.env['syd_bpm.activity'].create(
+                                                {'name':request['name'],
+                                                'type':'user-case',
+                                                'process_id':process_id.id,
+                                                'user_id':request['user_id'],
+                                                'pm_activity_id':request['id'],
+                                                'status':request['status'],
+                                                }
+                                                )
+                    else:
+                        request_id.name=request['name']
+                        request_id.process_id = process_id.id
+                        request_id.user_id = request['user_id']
+                        request_id.pm_activity_id = request['id']
+            for role in role_list:
+                role_id = self.env['syd_bpm.process_role'].get_or_create_process_role(role['name'])
 
             pgroup.last_update = fields.Datetime.now()
 
