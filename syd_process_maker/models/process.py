@@ -439,7 +439,9 @@ class Activity(models.Model):
     
     pm_activity_id = fields.Char(string='Process Maker ID',required=False)
     status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status')
-
+    
+    def start_activity(self):
+        pass
     
     
 class Case(models.Model):
