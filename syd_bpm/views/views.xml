@@ -533,7 +533,7 @@
       <field name="context">{"search_default_startable":1}</field>
     </record>
 
-    <record model="ir.ui.view" id="case_tree_view">
+    <record model="ir.ui.view" id="view_case_tree">
       <field name="name">syd_bpm.case.tree</field>
       <field name="model">syd_bpm.case</field>
       <field name="arch" type="xml">
@@ -548,7 +548,7 @@
     </record>
 
 
-    <record model="ir.ui.view" id="case_form_view">
+    <record model="ir.ui.view" id="view_case_form">
       <field name="name">syd_bpm.case.form</field>
       <field name="model">syd_bpm.case</field>
       <field name="arch" type="xml">
@@ -558,11 +558,16 @@
             <button name="cancel_case" class="oe_highlight" type="object" string="Cancel Case" attrs="{'invisible':[('state','!=','in_progress')]}" confirm="This action cannot be reverted. Are you sure?"></button>
           </header>
           <sheet>
-
             <group>
-              <field name="name" />
-
-
+              <group>
+                <field name="name" />
+                <field name="process_id" />
+              </group>
+              <group>
+                <field name="date_task_start"/>
+                <field name="date_task_end"/>
+                <field name="task_active"/>
+              </group>
             </group>
             <field name="task_executed_ids"/>
           </sheet>
@@ -570,8 +575,8 @@
       </field>
     </record>
 
-    <record id="view_case_filter" model="ir.ui.view">
-      <field name="name">case.select</field>
+    <record id="view_case_search" model="ir.ui.view">
+      <field name="name">Case Select</field>
       <field name="model">syd_bpm.case</field>
       <field name="arch" type="xml">
         <search string="Search Document">
@@ -584,15 +589,13 @@
       </field>
     </record>
 
-
-    <record model="ir.actions.act_window" id="case_todo_act_I">
+    <record model="ir.actions.act_window" id="open_view_case">
       <field name="name">Case</field>
       <field name="res_model">syd_bpm.case</field>
       <field name="view_mode">tree,form</field>
-      <field name="search_view_id" ref="view_case_filter" />
-      <field name="context">{'search_default_state':'in_progress','search_default_group_by_process_id':1'}</field>
+      <field name="view_ids" eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('view_case_tree')}),(0, 0, {'view_mode': 'form', 'view_id': ref('view_case_form')})]"/>
+      <field name="search_view_id" ref="view_case_search"/>
     </record>
-
 
     <record model="ir.ui.view" id="dynamic_form_kanban_view">
       <field name="name">syd_bpm.dynamic_form.kanban</field>
