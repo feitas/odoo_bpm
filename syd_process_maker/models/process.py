@@ -99,6 +99,13 @@ class ProcessGroup(BPMInterface,models.Model):
         return requests
 
     @api.model
+    def _get_process_task_list(self, process_id):
+        par = {'filter': process_id.name}
+        task_definition = self._call('tasks',par)
+        tasks = task_definition['data']
+        return tasks
+
+    @api.model
     def _get_starting_activity(self,process_id):
         # GET /case/start-cases
         starting_activities = self._call('project/%s/starting-tasks' %process_id )
@@ -225,8 +232,9 @@ class ProcessGroup(BPMInterface,models.Model):
         process_id.description = res.get('process')['description']
         process_id.start_events = str(res)
         request_list = self._get_process_request_list(process_id)
+        task_list = self._get_process_task_list(process_id)
         for request in request_list:
-            request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id.id))],limit=1)
+            request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id.id)),('pm_activity_id','=',int(request['id']))],limit=1)
             if not request_id:
                 request_id = self.env['syd_bpm.activity'].create(
                                         {'name':request['name'],
@@ -242,7 +250,21 @@ class ProcessGroup(BPMInterface,models.Model):
                 request_id.process_id = process_id.id
                 request_id.user_id = request['user_id']
                 request_id.pm_activity_id = request['id']
-        return res
+        # for task in task_list:
+        #     task_id = self.env['syd_bpm.case'].search([('name','=',task['element_name']),('process_id','=',int(process_id.id)),('pm_case_id','=',int(task['id']))],limit=1)
+        #     if not task_id:
+        #         task_id = self.env['syd_bpm.case'].create(
+        #                                 {'name':task['element_name'],
+        #                                 'process_id':process_id.id,
+        #                                 'pm_case_id':task['id'],
+        #                                 'status':task['status'],
+        #                                 }
+        #                                 )
+        #     else:
+        #         task_id.name=task['element_name']
+        #         task_id.process_id = process_id.id
+        #         task_id.pm_case_id = task['id']
+        return True
     
     
     def update_processes(self):
@@ -355,6 +377,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 #         acts.is_start_activity = False
             for role in role_list:
                 role_id = self.env['syd_bpm.process_role'].get_or_create_process_role(role['name'])
+                role_id.pm_group_id = role.get("id")
 
             pgroup.last_update = fields.Datetime.now()
 
@@ -438,7 +461,7 @@ class Activity(models.Model):
     
     
     pm_activity_id = fields.Char(string='Process Maker ID',required=False)
-    status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status')
+    status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
     
     def start_activity(self):
         pass
