@@ -53,11 +53,12 @@ class ProcessGroup(BPMInterface,models.Model):
         
         endresult = ''
         if (method == 'GET'):
-            endresult = requests.get(self.pm_url+'/api/1.0/'+ request, params =jsonobject, headers=headers )
+            endresult = requests.get(self.pm_url+'/api/1.0/' + request, params = jsonobject, headers=headers )
         if (method == 'POST'):
-            endresult = requests.post(self.pm_url+'/api/1.0/'+ request, params =jsonobject, headers=headers)
+            endresult = requests.post(self.pm_url+'/api/1.0/' + request, params = jsonobject, headers=headers)
         if (method == 'PUT'):
-            endresult = requests.put(self.pm_url+'/api/1.0/'+ self.pm_workspace + '/' + request, data =jsonobject, headers=headers)
+            headers.update({'Content-Type': 'application/json'})
+            endresult = requests.put(self.pm_url+'/api/1.0/' + request, data = jsonobject, headers=headers)
         if (not bool(endresult) or not endresult.ok):
             raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
         if bool(endresult.content): 
@@ -395,64 +396,64 @@ class ProcessGroup(BPMInterface,models.Model):
     
     @api.model
     def _set_variables(self,case):
-            # Da capire cosa succede per i sottoprocessi se setti una variabile del padre
-            data = {}
-            flag = False
-            for v in case.case_object_ids :
-                if bool(v.process_object_id.pm_variable_id):
-                    data[v.name] = v.get_val()
-                    flag=True
-            if flag: 
-                case.process_group_id._set_case_variables(case.pm_case_id,data)
+        # Da capire cosa succede per i sottoprocessi se setti una variabile del padre
+        data = {}
+        flag = False
+        for v in case.case_object_ids :
+            if bool(v.process_object_id.pm_variable_id):
+                data[v.name] = v.get_val()
+                flag=True
+        if flag: 
+            case.process_group_id._set_case_variables(case.pm_case_id,data)
             
     @api.model
     def _route_case_from_task(self,task_executed_id):
-            case = task_executed_id.case_id
-            case.sudo().process_group_id._set_variables(case)
+        case = task_executed_id.case_id
+        case.sudo().process_group_id._set_variables(case)
+        case_info =  case.process_group_id._get_case_info(case.pm_case_id)
+        if (case_info['app_status']=='COMPLETED' and  case.state == 'in_progress') :
+            case.state = 'completed'
+            if (case.parent_id) :
+                case.process_group_id._route_case_from_task(case.parent_task_id)
+        else :
+            current_tasks_pre = case.process_group_id._get_current_tasks(case_info)
+            cid_pre = [ctask['tas_uid'] for ctask in current_tasks_pre]
+            
+            if (case.process_group_id._route_case(case.pm_case_id,task_executed_id.pm_del_index)) :
+                    current_tasks_post = case.process_group_id._get_current_tasks(case_info)
+                    cid_post = [ctask['tas_uid'] for ctask in current_tasks_post] 
+                    for current_task in current_tasks_post :
+                        activity_id = self.env['syd_bpm.activity'].search([('pm_activity_id','=',current_task['tas_uid'])])
+                        task_id = self.env['syd_bpm.task_executed'].search([('case_id','=',case.id),('pm_task_id','=',current_task['tas_uid']),('pm_del_index','=',current_task['del_index'])])
+                        # per risolvere loop e task paralleli
+                        if (not bool(task_id)):
+                            self.env['syd_bpm.task_executed'].create(
+                                                {
+                                                    'name':current_task['tas_title'],
+                                                    'pm_task_id':current_task['tas_uid'],
+                                                    'pm_del_index':current_task['del_index'],
+                                                    'is_task_active' : True,
+                                                    'case_id':case.id,
+                                                    'date_task_start' : fields.Datetime.now(),
+                                                    'activity_id' :activity_id.id
+                                                    }
+                                                )
+                    for current_task in current_tasks_pre :
+                            # Task completati
+                        if (current_task['tas_uid'] not in cid_post):
+                            task_completed = self.env['syd_bpm.task_executed'].search([('pm_task_id','=',current_task['tas_uid']),('case_id','=',case.id,)],limit=1)
+                            # TODO
+                            task_completed.is_task_active=False
+                            task_completed.date_task_end=fields.Datetime.now()
+                
+            
+            
             case_info =  case.process_group_id._get_case_info(case.pm_case_id)
-            if (case_info['app_status']=='COMPLETED' and  case.state == 'in_progress') :
+            ## Ad esempio dopo azioni automatiche 
+            if (case_info['app_status']=='COMPLETED' and case.state == 'in_progress') :
                 case.state = 'completed'
                 if (case.parent_id) :
-                    case.process_group_id._route_case_from_task(case.parent_task_id)
-            else :
-                current_tasks_pre = case.process_group_id._get_current_tasks(case_info)
-                cid_pre = [ctask['tas_uid'] for ctask in current_tasks_pre]
-               
-                if (case.process_group_id._route_case(case.pm_case_id,task_executed_id.pm_del_index)) :
-                        current_tasks_post = case.process_group_id._get_current_tasks(case_info)
-                        cid_post = [ctask['tas_uid'] for ctask in current_tasks_post] 
-                        for current_task in current_tasks_post :
-                            activity_id = self.env['syd_bpm.activity'].search([('pm_activity_id','=',current_task['tas_uid'])])
-                            task_id = self.env['syd_bpm.task_executed'].search([('case_id','=',case.id),('pm_task_id','=',current_task['tas_uid']),('pm_del_index','=',current_task['del_index'])])
-                            # per risolvere loop e task paralleli
-                            if (not bool(task_id)):
-                                self.env['syd_bpm.task_executed'].create(
-                                                    {
-                                                     'name':current_task['tas_title'],
-                                                     'pm_task_id':current_task['tas_uid'],
-                                                     'pm_del_index':current_task['del_index'],
-                                                     'is_task_active' : True,
-                                                     'case_id':case.id,
-                                                     'date_task_start' : fields.Datetime.now(),
-                                                     'activity_id' :activity_id.id
-                                                     }
-                                                    )
-                        for current_task in current_tasks_pre :
-                                # Task completati
-                            if (current_task['tas_uid'] not in cid_post):
-                                task_completed = self.env['syd_bpm.task_executed'].search([('pm_task_id','=',current_task['tas_uid']),('case_id','=',case.id,)],limit=1)
-                                # TODO
-                                task_completed.is_task_active=False
-                                task_completed.date_task_end=fields.Datetime.now()
-                    
-                
-                
-                case_info =  case.process_group_id._get_case_info(case.pm_case_id)
-                ## Ad esempio dopo azioni automatiche 
-                if (case_info['app_status']=='COMPLETED' and case.state == 'in_progress') :
-                    case.state = 'completed'
-                    if (case.parent_id) :
-                        case.process_group_id._route_case_from_task(case.parent_task_id)    
+                    case.process_group_id._route_case_from_task(case.parent_task_id)    
     
            
 class Process(models.Model):
@@ -478,8 +479,20 @@ class Activity(models.Model):
 class Case(models.Model):
     _inherit = 'syd_bpm.case'
     
-    
     pm_case_id = fields.Char(string='Process Maker ID', required=False)
+
+    def confirm_case(self):
+        """
+        /tasks/{task_id} Update a task
+        """
+        _data = {
+            "status": "COMPLETED",
+            "data": {
+                "form_input_1": "test"
+            }
+        }
+        res = self.process_id.process_group_id._call(f'tasks/%s' % self.pm_case_id, json.dumps(_data), method='PUT')
+        return res
    
     
     

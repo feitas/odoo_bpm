@@ -73,6 +73,12 @@
       <field name="model">syd_bpm.case</field>
       <field name="inherit_id" ref="syd_bpm.view_case_form"/>
       <field name="arch" type="xml">
+        <xpath expr="//header" position="inside">
+          <button name="confirm_case" class="oe_highlight" type="object" 
+            string="Confirm Case" 
+            attrs="{'invisible':[('state','!=','in_progress')]}">
+          </button>
+        </xpath>
         <xpath expr="//field[@name='process_id']" position="after">
           <field name="pm_case_id"/>
         </xpath>
