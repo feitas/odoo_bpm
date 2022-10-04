@@ -1,0 +1,1406 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* syd_bpm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-04 04:01+0000\n"
+"PO-Revision-Date: 2022-10-04 04:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__action
+msgid "Action"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_needaction
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_needaction
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_needaction
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_needaction
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_base_automation__state
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_actions_server__state
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_cron__state
+msgid "Action To Do"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.activity_act
+#: model:ir.model,name:syd_bpm.model_syd_bpm_activity
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__activity_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__activity_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__activity_id
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__attachment_type__activity
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_activity_triggers
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_activity_variables
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_tree_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "Activity"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.activity_trigger_act
+msgid "Activity Trigger"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_res_config_settings__activity_type_id
+#: model_terms:ir.ui.view,arch_db:syd_bpm.res_config_settings_view_link_external_form
+msgid "Activity Type"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.res_config_settings_view_link_external_form
+msgid "Activity on Note"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_res_config_settings__module_syd_bpm_activity
+msgid "Activity on note"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_attachment_count
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_attachment_count
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_attachment_count
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_attachment_count
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__activity_ids
+msgid "Attachment activities"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__attachment_type
+msgid "Attachment type"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__attachment_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__attachment_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__attachment_ids
+msgid "Attachments"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__automated
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__automated
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+msgid "Automated"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_root
+msgid "B.P.M."
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_base_automation__activity_id
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_actions_server__activity_id
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_cron__activity_id
+msgid "BPM Activity"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_trigger_form_view
+msgid "BPM Activity Actions"
+msgstr ""
+
+#. module: syd_bpm
+#: model:res.groups,name:syd_bpm.group_bpm_manager
+msgid "BPM Manager"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_trigger_form_view
+msgid "BPM Process Actions"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__boolean
+msgid "Boolean"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_root_inside
+msgid "Business Process Management"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.module.category,description:syd_bpm.module_category_bpm
+#: model:ir.module.category,name:syd_bpm.module_category_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.res_config_settings_view_link_external_form
+msgid "Business Process Manager"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_case_object
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_object
+msgid "Business Process Manager Object"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_role
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_role_user
+msgid "Business Process Manager Role"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_role_activity
+msgid "Business Process Manager Role Activity"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__css_text_color
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__css_text_color
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__css_text_color
+msgid "CSS Text color"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__css_background_color
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__css_background_color
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__css_background_color
+msgid "CSS background color"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_start_view
+msgid "Cancel"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_form
+msgid "Cancel Case"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_case__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.open_view_case
+#: model:ir.model,name:syd_bpm.model_syd_bpm_case
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__case_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__case_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__case_id
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_form
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_tree
+msgid "Case"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__description
+msgid "Case Description"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__detail
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__detail
+msgid "Case Detail"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__case_duration
+msgid "Case Duration"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__parent_id
+msgid "Case Object with same name of Parent Case"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__case_object_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__case_object_ids
+msgid "Case Objects"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__sub_case_id
+msgid "Case of Subprocess"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__case_ids
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_cases
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+msgid "Cases"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__char
+msgid "Char"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__choices
+msgid "Choices"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+msgid "Close"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__ir_actions_server__state__activity
+msgid "Complete BPM Activity"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_case__state__completed
+msgid "Completed"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_conf
+msgid "Configuration"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_start_view
+msgid "Confirm"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__create_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__create_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__date
+msgid "Date"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.date_calculated
+msgid "Date Calculated"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__date_calculated
+msgid "Date Calculated From Start Process"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__date_deadline
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__date_deadline
+msgid "Date Deadline"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__date_task_end
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__date_task_end
+msgid "Date End"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__date_task_start
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__date_task_start
+msgid "Date Start"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__datetime
+msgid "Datetime"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_date_calculated__option__day_after_date
+msgid "Day(s) after the Date"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_date_calculated__option__fix_day_following_month
+msgid "Day(s) after the end of the date month"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__date_deadline
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__date_deadline
+msgid "Deadline"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__default_attachment
+msgid "Default attachment"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__deprecated
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__deprecated
+msgid "Deprecated"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__description
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__description
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__description
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__description
+msgid "Description"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__display_name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+msgid "Documents"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_dynamic_form__state__done
+msgid "Done"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_dynamic_form__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_dynamic_form
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__dynamic_form_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__dynamic_form_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__dynamic_form_id
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_tree
+msgid "Dynamic Form"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_dynamic_form_line
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__dynamic_form_line_ids
+msgid "Dynamic Form Line"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__dynamic_user_id
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__dynamic-user
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+msgid "Dynamic User"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__dynamic_wizard_id
+msgid "Dynamic Wizard"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.dyanmic_form_action
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__dynamic_form_ids
+#: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_form
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+msgid "Dynamic form"
+msgstr ""
+
+#. module: syd_bpm
+#: code:addons/syd_bpm/models/dynamic_form.py:0
+#, python-format
+msgid "Dynamic form not done!"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.management_dynamic_form
+msgid "Dynamic forms"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_form
+msgid "Fields"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "Filters"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_role_activity__type__first-of-role
+msgid "First of Role"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__float
+msgid "Float"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_follower_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_follower_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_follower_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_follower_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_partner_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_partner_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_partner_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_partner_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__form_compiled
+msgid "Form Compiled"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_activity_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_search
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_dynamic_form_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
+msgid "Group By"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__has_message
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__has_message
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__has_message
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__has_message
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__html
+msgid "Html"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__id
+msgid "ID"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_needaction
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_unread
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_needaction
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_unread
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_needaction
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_unread
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_needaction
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_unread
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_needaction
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_has_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_has_sms_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_has_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_has_sms_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_has_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_has_sms_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_has_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_has_sms_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_has_error
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_case__state__in_progress
+msgid "In Progress"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__integer
+msgid "Integer"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__is_task_active
+msgid "Is Active"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_is_follower
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_is_follower
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_is_follower
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_is_follower
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__is_start_activity
+msgid "Is Starting"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__is_attachment
+msgid "Is attachment"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start____last_update
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__last_update
+msgid "Last Update"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__write_uid
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__write_date
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_date_calculated__option__last_day_current_month
+msgid "Last day of current month"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_date_calculated__option__last_day_following_month
+msgid "Last day of following month"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__ir_actions_server__state__process
+msgid "Launch BPM Process"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__locked
+msgid "Locked"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_main_attachment_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_main_attachment_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_main_attachment_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_main_attachment_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__many2one
+msgid "Many2one"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__map
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+msgid "Map"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_has_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_has_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_has_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_has_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__model_id
+msgid "Model"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__model
+msgid "Model name"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_priority__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__name
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__name
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_activity_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_search
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_dynamic_form_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
+msgid "Name"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+msgid "Next Process Task"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_note_note
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__note
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__note_id
+msgid "Note"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__case_ids_count
+msgid "Number active case"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_needaction_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_needaction_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_needaction_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_needaction_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__days
+msgid "Number of Days"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__activity_ids_count
+msgid "Number of activities"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_has_error_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_has_error_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_has_error_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_has_error_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_needaction_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_needaction_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_needaction_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_needaction_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_has_error_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_has_error_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_has_error_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_has_error_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_unread_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__message_unread_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__message_unread_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_unread_counter
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__option
+msgid "Options"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__parent_id
+msgid "Parent Case"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__parent_task_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__parent_task_id
+msgid "Parent Task Executed"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_act
+#: model:ir.actions.act_window,name:syd_bpm.process_todo_act
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_priority
+#: model:ir.model.fields,field_description:syd_bpm.field_base_automation__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_actions_server__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_cron__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__process_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__process_id
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__attachment_type__process
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_triggers
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_tree_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_activity_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_search
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_dynamic_form_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
+msgid "Process"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "Process Case Name"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_category_act
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_categories
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_category_tree_view
+msgid "Process Categories"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_category
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__category_id
+msgid "Process Category"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_date_calculated_act
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_date_calculated_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_date_calculated_tree_view
+msgid "Process Date Calculated"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_date_calculated
+msgid "Process Date Term"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__process_description
+msgid "Process Description"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_group_act
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_group
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__process_group_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__process_group_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__process_group_id
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_group_form_view
+msgid "Process Group"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_groups
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_group_tree_view
+msgid "Process Groups"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_res_config_settings__module_syd_process_maker
+#: model_terms:ir.ui.view,arch_db:syd_bpm.res_config_settings_view_link_external_form
+msgid "Process Maker Integration"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "Process Name"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_object_act
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__process_object_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__process_object_id
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_object_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_object_tree_view
+msgid "Process Object"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__process_object_ids
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_objects
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+msgid "Process Objects"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_priority_act
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__priority_id
+#: model:ir.ui.menu,name:syd_bpm.process_priority
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_priority_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_priority_tree_view
+msgid "Process Priority"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_role_act
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__process_role_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__process_role_id
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__process-role
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_role_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_role_tree_view
+msgid "Process Role"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__process_role_activity_id
+msgid "Process Role Activity"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__process_role_ids
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_roles
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
+msgid "Process Roles"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.action_process_start
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_start_view
+msgid "Process Start"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_process_start
+msgid "Process Start Wizard "
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.process_trigger_act
+msgid "Process Trigger"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_category_form_view
+msgid "Process Variables"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__process_name
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_activity_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_dynamic_form_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
+msgid "Process name"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_group__type__processmaker2
+msgid "ProcessMaker2"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_group__type__processmaker3
+msgid "ProcessMaker3"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_group__type__processmaker4
+msgid "ProcessMaker4"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__process_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__process_ids
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_processes
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_sub_menu_processes
+msgid "Processes"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_role_activity__type__random
+msgid "Random"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_reports
+msgid "Reports"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__required
+msgid "Required"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__res_id
+msgid "Res Id"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_has_sms_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_has_sms_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_has_sms_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_has_sms_error
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_todo_search_view
+msgid "Search"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_activity_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_search
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_dynamic_form_filter
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
+msgid "Search Document"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "Search Task"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__selection
+msgid "Selection"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__sequence
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__sequence
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_ir_actions_server
+msgid "Server Action"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_form
+msgid "Set Done"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_start_view
+msgid "Set information related to this case."
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.action_bpm_config
+#: model:ir.ui.menu,name:syd_bpm.menu_bpm_config
+msgid "Settings"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__user-fixed
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+msgid "Specific User"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__start_events
+msgid "Start Events"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__startable
+#: model_terms:ir.ui.view,arch_db:syd_bpm.process_todo_search_view
+msgid "Startable"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__state
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__state
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_search
+msgid "State"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "State Completed"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__string_field
+msgid "String"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__sub_process_id
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__sub-process
+#: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
+msgid "Sub Process"
+msgstr ""
+
+#. module: syd_bpm
+#: code:addons/syd_bpm/models/process.py:0
+#, python-format
+msgid "Subprocess of %s - %s - %s"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_form_view
+msgid "Task"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__task_duration
+msgid "Task Duration"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_note_note__task_executed_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__task_executed_ids
+msgid "Task Executed"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__task_list
+msgid "Task List"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
+msgid "Task Name"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__task_active
+msgid "Task active"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model,name:syd_bpm.model_syd_bpm_task_executed
+#: model_terms:ir.ui.view,arch_db:syd_bpm.task_executed_form_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.task_executed_tree_view
+msgid "Task executed"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_tasks_report
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_graph_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_pivot_view
+#: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_tree_view
+msgid "Tasks"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.actions.act_window,name:syd_bpm.tasks_report_act
+msgid "Tasks Report"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__text
+msgid "Text"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+msgid "The note will not be visible. Are you sure to Archive this Note?"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_case_form
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+msgid "This action cannot be reverted. Are you sure?"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_triggers
+msgid "Triggers"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__type
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__type
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__type
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__type
+msgid "Type"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_base_automation__state
+#: model:ir.model.fields,help:syd_bpm.field_ir_actions_server__state
+#: model:ir.model.fields,help:syd_bpm.field_ir_cron__state
+msgid ""
+"Type of server action. The following values are available:\n"
+"- 'Execute Python Code': a block of python code that will be executed\n"
+"- 'Create': create a new record with new values\n"
+"- 'Update a Record': update the values of a record\n"
+"- 'Execute several actions': define an action that triggers several other server actions\n"
+"- 'Send Email': automatically send an email (Discuss)\n"
+"- 'Add Followers': add followers to a record (Discuss)\n"
+"- 'Create Next Activity': create an activity (Discuss)"
+msgstr ""
+
+#. module: syd_bpm
+#: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
+msgid "Undo Close"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_unread
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_unread
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_unread
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_unread
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_unread_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__message_unread_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__message_unread_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_unread_counter
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_base_automation__user_id
+#: model:ir.model.fields,field_description:syd_bpm.field_ir_actions_server__user_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__user_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_user__user_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__user_id
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__user_id
+msgid "User"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__user_id
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__user-case
+msgid "User of Process Case"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_role_activity__type__less-activity
+msgid "User with less process activity"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__process_user_ids
+msgid "Users"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_boolean
+msgid "Val Bool"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_char
+msgid "Val Char"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_date
+msgid "Val Date"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_datetime
+msgid "Val Datetime"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_float
+msgid "Val Float"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_html
+msgid "Val Html"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_integer
+msgid "Val Int"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_selection
+msgid "Val Selection"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_text
+msgid "Val Text"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__website_message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__website_message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__website_message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__website_message_ids
+#: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: syd_bpm
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__website_message_ids
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process__website_message_ids
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_category__website_message_ids
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__website_message_ids
+#: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__website_message_ids
+msgid "Website communication history"
+msgstr ""
