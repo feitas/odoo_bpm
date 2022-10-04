@@ -28,7 +28,7 @@ class BPMInterface:
     @abc.abstractmethod
     def _get_process_list(self):
         """ 
-            Retrieve the list of the processes
+            Retrieve the list of the processes from pm
         """
         pass
     
@@ -216,8 +216,8 @@ class Process(models.Model):
     name = fields.Char(string='Name',required=True)
     description = fields.Char(string='Description')
     process_group_id = fields.Many2one('syd_bpm.process_group','Process Group',required=True)
-    activity_ids = fields.One2many('syd_bpm.activity','process_id',string="Activities")
-    activity_ids_count =  fields.Integer('Number of activities',compute="get_activity_count")
+    pm_activity_ids = fields.One2many('syd_bpm.activity','process_id',string="Activities")
+    pm_activity_ids_count =  fields.Integer('Number of activities',compute="get_activity_count")
     case_ids = fields.One2many('syd_bpm.case','process_id',string="Cases")
     process_object_ids = fields.One2many('syd_bpm.process_object','process_id',string="Process Objects")
     case_ids_count = fields.Integer('Number active case',compute="get_active_case")
@@ -237,11 +237,11 @@ class Process(models.Model):
     start_events = fields.Char()
     
 
-    @api.depends('activity_ids')
+    @api.depends('pm_activity_ids')
     def _compute_process_role_ids(self):
         for ele in self:
             ids = []
-            for activity in ele.activity_ids:
+            for activity in ele.pm_activity_ids:
                 if activity.process_role_activity_id.id:
                     ids.append(activity.process_role_activity_id.id)
             ele.process_role_ids = ids
@@ -249,7 +249,7 @@ class Process(models.Model):
     
     def get_activity_count(self):
         for p in self:
-            p.activity_ids_count = len(p.sudo().activity_ids)
+            p.pm_activity_ids_count = len(p.sudo().pm_activity_ids)
             
     
     def get_active_case(self):

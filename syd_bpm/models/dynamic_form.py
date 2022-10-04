@@ -46,7 +46,7 @@ class DynamicForm(models.Model):
     name = fields.Char('Name',required=True)
     note = fields.Text('Note',required=True)
     process_id = fields.Many2one('syd_bpm.process',string='Process', required=True)
-    activity_ids = fields.One2many('syd_bpm.activity','dynamic_form_id')
+    pm_activity_ids = fields.One2many('syd_bpm.activity','dynamic_form_id')
     dynamic_form_line_ids = fields.One2many('syd_bpm.dynamic_form_line','dynamic_form_id')
     dynamic_wizard_id = fields.Many2one('syd_dynamic_wizard.wizard.config')
     state = fields.Selection([('draft','Draft'),('done','Done')],default='draft',string='State')

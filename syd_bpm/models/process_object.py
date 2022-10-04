@@ -32,7 +32,7 @@ class ProcessObject(models.Model):
     choices = fields.Char('Choices',placeholder="[('blue','Blue'),('yellow','Yellow')]",default=False)
     date_calculated = fields.Many2one('syd_bpm.process_date_calculated',string='Date Calculated From Start Process')
     attachment_type = fields.Selection([('process','Process'),('activity','Activity')], string="Attachment type")
-    activity_ids = fields.Many2many('syd_bpm.activity', relation='syd_bpm_activity_process_object', column1='process_object_id', column2='activity_id', string='Attachment activities', domain="[('process_id','=',process_id)]")
+    pm_activity_ids = fields.Many2many('syd_bpm.activity', relation='syd_bpm_activity_process_object', column1='process_object_id', column2='activity_id', string='Attachment activities', domain="[('process_id','=',process_id)]")
     is_attachment = fields.Boolean(string="Is attachment")
     default_attachment = fields.Many2one('ir.attachment',string="Default attachment",domain=[('id','=','-1')])
     

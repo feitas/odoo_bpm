@@ -65,7 +65,7 @@
               <field name="process_ids" readonly="1">
                 <tree editable="bottom">
                   <field name="name" />
-                  <field name="activity_ids_count" />
+                  <field name="pm_activity_ids_count" />
                   <field name="case_ids_count" />
                   <field name="startable"/>
                   <field name="locked"/>
@@ -128,7 +128,7 @@
                 <field name="case_ids"/>
               </page>
               <page string="Activity">
-                <field name="activity_ids"/>
+                <field name="pm_activity_ids"/>
               </page>
               <page string="Process Objects">
                 <field name="process_object_ids" />
@@ -814,7 +814,7 @@
               <field name="model_id" attrs="{'invisible':[('type','!=','many2one')],'readonly' : [('is_attachment','=',True)]}"/>
               <field name="date_calculated"/>
               <field name="attachment_type" attrs="{'invisible':[('is_attachment','=',False)], 'required':[('is_attachment','=',True)]}"/>
-              <field name="activity_ids" widget="many2many_tags" attrs="{'invisible':[('attachment_type','!=','activity')], 'required':[('attachment_type','=','activity')]}"/>
+              <field name="pm_activity_ids" widget="many2many_tags" attrs="{'invisible':[('attachment_type','!=','activity')], 'required':[('attachment_type','=','activity')]}"/>
               <field name="default_attachment" attrs="{'invisible':[('is_attachment','=',False)]}"/>
             </group>
 

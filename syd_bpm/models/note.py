@@ -112,7 +112,7 @@ class Note(models.Model):
                             
                     elif case_object.process_object_id.attachment_type == 'activity':
                         for task_executed in note.task_executed_ids:
-                            if task_executed.activity_id in case_object.process_object_id.activity_ids:
+                            if task_executed.activity_id in case_object.process_object_id.pm_activity_ids:
                                 if case_object.res_id:
                                     if case_object.is_attachment_loaded():
                                         attachment_ids.append(case_object.res_id)

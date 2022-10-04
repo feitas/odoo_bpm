@@ -62,7 +62,6 @@ class ProcessGroup(BPMInterface,models.Model):
         if bool(endresult.content): 
             if 'json' in endresult.headers['Content-Type']:
                 _res = json.loads(endresult.content)
-                _logger.warning(_res)
                 return _res
             else :
                 return endresult.content
@@ -84,6 +83,7 @@ class ProcessGroup(BPMInterface,models.Model):
     def _get_request_list(self):
         request_definition = self._call('requests')
         requests = request_definition['data']
+        _logger.info("------- requests -------- %s" % str(requests))
         return requests
 
     @api.model
@@ -280,8 +280,7 @@ class ProcessGroup(BPMInterface,models.Model):
                     pm_category = False
                     if process['process_category_id'] != '':
                         pm_category = self._get_category_info(int(process['process_category_id']))['name']
-                    if (not process_id) :
-                        _logger.warning(process)
+                    if not process_id:
                         process_id = self.env['syd_bpm.process'].create(
                                                            {'name':process['name'],
                                                             'description':process['description'],
@@ -290,7 +289,7 @@ class ProcessGroup(BPMInterface,models.Model):
                                                             'category_id':self.env['syd_bpm.process_category'].get_or_create_category(pm_category)
                                                             }
                                                            )
-                    else :
+                    else:
                         process_id.name=process['name']
                         process_id.description = process['description']
                         process_id.start_events = str(process['start_events'])
@@ -299,7 +298,7 @@ class ProcessGroup(BPMInterface,models.Model):
 
             for request in request_list:
                 process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',request['process_id'])],limit=1)
-                request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id))],limit=1)
+                request_id = self.env['syd_bpm.activity'].search([('pm_activity_id','=',request['id']),('process_id','=',int(process_id))],limit=1)
                 if not request_id:
                     request_id = self.env['syd_bpm.activity'].create(
                                             {'name':request['name'],

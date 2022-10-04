@@ -1,17 +1,15 @@
 <odoo>
   <data>
-
     <record model="ir.ui.view" id="process_maker_group_form_view">
       <field name="name">syd_bpm.process_group.form</field>
       <field name="model">syd_bpm.process_group</field>
       <field name="inherit_id" ref="syd_bpm.process_group_form_view"/>
       <field name="arch" type="xml">
         <xpath expr="//div[@name='button_box']" position="inside">
-
-          <button attrs="{'invisible':[('type','!=','ProcessMaker4')]}" groups="syd_bpm.group_bpm_manager" class="oe_stat_button" name="update_processes" type="object" title="Update" icon="fa-refresh">
+          <button attrs="{'invisible':[('type','!=','ProcessMaker4')]}" groups="syd_bpm.group_bpm_manager" class="oe_stat_button" 
+            name="update_processes" type="object" title="Update" icon="fa-refresh">
             <field name="last_update" readonly="1"/>
           </button>
-
         </xpath>
         <xpath expr="//notebook[@name='parameters']" position="inside">
           <page attrs="{'invisible':[('type','!=','ProcessMaker4')]}" string="Process Maker parameter" groups="base.group_system">
@@ -22,8 +20,6 @@
               <field name="pm_client_secret" />
               <field name="pm_username" />
               <field name="pm_password" password="True"/>
-
-
             </group>
             <group>
               <field name="pm_user_name" />
