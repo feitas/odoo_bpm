@@ -57,6 +57,16 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="process_maker_case_tree_view">
+      <field name="name">syd_bpm.case.tree</field>
+      <field name="model">syd_bpm.case</field>
+      <field name="inherit_id" ref="syd_bpm.view_case_tree"/>
+      <field name="arch" type="xml">
+        <field name="name" position="before">
+          <field name="pm_case_id"/>
+        </field>
+      </field>
+    </record>
 
     <record model="ir.ui.view" id="process_maker_case_form_view">
       <field name="name">syd_bpm.case.form</field>

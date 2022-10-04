@@ -32,7 +32,7 @@ class ProcessGroup(BPMInterface,models.Model):
     pm_user_name = fields.Char(string='Nome of the user of PM',required=True)
     
     
-    def _call(self,request,jsonobject=dict(),method='GET'):
+    def _call(self, request, jsonobject=dict(), method='GET'):
         auth = {
                 'grant_type': 'password',
                 'scope': '*',
@@ -53,11 +53,11 @@ class ProcessGroup(BPMInterface,models.Model):
         
         endresult = ''
         if (method == 'GET'):
-            endresult = requests.get(self.pm_url+'/api/1.0/'+request,params =jsonobject,headers=headers )
+            endresult = requests.get(self.pm_url+'/api/1.0/'+ request, params =jsonobject, headers=headers )
         if (method == 'POST'):
-            endresult = requests.post(self.pm_url+'/api/1.0/'+request,params =jsonobject ,headers=headers)
+            endresult = requests.post(self.pm_url+'/api/1.0/'+ request, params =jsonobject, headers=headers)
         if (method == 'PUT'):
-            endresult = requests.put(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
+            endresult = requests.put(self.pm_url+'/api/1.0/'+ self.pm_workspace + '/' + request, data =jsonobject, headers=headers)
         if (not bool(endresult) or not endresult.ok):
             raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
         if bool(endresult.content): 
@@ -254,6 +254,27 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
         
+        # get tasks by process_request_id
+        params = {
+            'process_request_id': res.get('id')
+        }
+        pm_tasks = self._call(f'tasks', params, method='GET')
+        pprint(pm_tasks)
+        if pm_tasks.get('data'):
+            for item in pm_tasks.get('data'):
+                _domain = [
+                    ('pm_case_id', '=', item.get('id')),
+                ]
+                task = self.env['syd_bpm.case'].search(_domain)
+                if not task:
+                    _val = {
+                        'pm_case_id': item.get('id'),
+                        'name': item.get('element_name')
+                    }
+                    self.env['syd_bpm.case'].create(_val)
+        else:
+            _logger.warning(pm_tasks)
+
         return True
     
     
@@ -458,7 +479,7 @@ class Case(models.Model):
     _inherit = 'syd_bpm.case'
     
     
-    pm_case_id = fields.Char(string='Process Maker ID',required=False)
+    pm_case_id = fields.Char(string='Process Maker ID', required=False)
    
     
     
