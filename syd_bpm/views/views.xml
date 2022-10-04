@@ -271,6 +271,7 @@
           <field name="type"/>
           <field name="deprecated"/>
           <field name="user_id"/>
+          <field name="create_date" />
         </tree>
       </field>
     </record>

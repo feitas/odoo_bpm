@@ -29,6 +29,17 @@
       </field>
     </record>
 
+    <record model="ir.ui.view" id="process_maker_activity_tree_view">
+      <field name="name">syd_bpm.activity.tree</field>
+      <field name="model">syd_bpm.activity</field>
+      <field name="inherit_id" ref="syd_bpm.activity_tree_view"/>
+      <field name="arch" type="xml">
+        <field name="create_date" position="after">
+          <field name="pm_activity_id"/>
+        </field>
+      </field>
+    </record>
+
     <record model="ir.ui.view" id="process_maker_activity_form_view">
       <field name="name">syd_bpm.activity.form</field>
       <field name="model">syd_bpm.activity</field>

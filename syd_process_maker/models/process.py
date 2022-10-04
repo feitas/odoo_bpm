@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 
+from pprint import pprint
 from odoo import models, fields, api
 from odoo.tools.translate import _
 from ...syd_bpm.models.process import BPMInterface
@@ -221,49 +222,38 @@ class ProcessGroup(BPMInterface,models.Model):
     
     
     
-    def start_process(self,process_id,activity_id):
+    def start_process(self, process_id, activity_id):
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
         res = self._call(f'process_events/{pm_process_id}', par, method='POST')
-        process_id.name=res['name']
-        process_id.pm_process_id=res.get('process_id')
+        process_id.name = res['name']
+        process_id.pm_process_id = res.get('process_id')
         process_id.description = res.get('process')['description']
         process_id.start_events = str(res)
-        request_list = self._get_process_request_list(process_id)
-        task_list = self._get_process_task_list(process_id)
-        for request in request_list:
-            request_id = self.env['syd_bpm.activity'].search([('name','=',request['name']),('process_id','=',int(process_id.id)),('pm_activity_id','=',int(request['id']))],limit=1)
-            if not request_id:
-                request_id = self.env['syd_bpm.activity'].create(
-                                        {'name':request['name'],
-                                        'type':'user-case',
-                                        'process_id':process_id.id,
-                                        'user_id':request['user_id'],
-                                        'pm_activity_id':request['id'],
-                                        'status':request['status'],
-                                        }
-                                        )
-            else:
-                request_id.name=request['name']
-                request_id.process_id = process_id.id
-                request_id.user_id = request['user_id']
-                request_id.pm_activity_id = request['id']
-        # for task in task_list:
-        #     task_id = self.env['syd_bpm.case'].search([('name','=',task['element_name']),('process_id','=',int(process_id.id)),('pm_case_id','=',int(task['id']))],limit=1)
-        #     if not task_id:
-        #         task_id = self.env['syd_bpm.case'].create(
-        #                                 {'name':task['element_name'],
-        #                                 'process_id':process_id.id,
-        #                                 'pm_case_id':task['id'],
-        #                                 'status':task['status'],
-        #                                 }
-        #                                 )
-        #     else:
-        #         task_id.name=task['element_name']
-        #         task_id.process_id = process_id.id
-        #         task_id.pm_case_id = task['id']
+        _domain = [
+            ('name', '=', res.get('name')),
+            ('process_id', '=', int(process_id.id)),
+            ('pm_activity_id', '=', res.get('id'))
+        ]
+        request_id = self.env['syd_bpm.activity'].search(_domain, limit=1)
+        if not request_id:
+            _val = {
+                'name': res.get('name'),
+                'type': 'user-case',
+                'process_id': process_id.id,
+                'user_id': res.get('user_id'),
+                'pm_activity_id': res.get('id'),
+                'status': res.get('status'),
+            }
+            request_id = self.env['syd_bpm.activity'].create(_val)
+        else:
+            request_id.name = res.get('name')
+            request_id.process_id = process_id.id
+            request_id.user_id = res.get('user_id')
+            request_id.pm_activity_id = res.get('id')
+        
         return True
     
     
@@ -457,9 +447,7 @@ class Process(models.Model):
 class Activity(models.Model):
     _inherit = 'syd_bpm.activity'
     
-    
-    
-    pm_activity_id = fields.Char(string='Process Maker ID',required=False)
+    pm_activity_id = fields.Char(string='Process Maker ID', required=False)
     status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
     
     def start_activity(self):
