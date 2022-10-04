@@ -270,7 +270,8 @@ class ProcessGroup(BPMInterface,models.Model):
                 if not task:
                     _val = {
                         'pm_case_id': item.get('id'),
-                        'name': item.get('element_name')
+                        'name': item.get('element_name'),
+                        'process_id': process_id.id
                     }
                     self.env['syd_bpm.case'].create(_val)
         else:
