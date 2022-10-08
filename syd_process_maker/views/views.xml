@@ -6,8 +6,7 @@
       <field name="inherit_id" ref="syd_bpm.process_group_form_view"/>
       <field name="arch" type="xml">
         <xpath expr="//div[@name='button_box']" position="inside">
-          <button attrs="{'invisible':[('type','!=','ProcessMaker4')]}" groups="syd_bpm.group_bpm_manager" class="oe_stat_button" 
-            name="update_processes" type="object" title="Update" icon="fa-refresh">
+          <button attrs="{'invisible':[('type','!=','ProcessMaker4')]}" groups="syd_bpm.group_bpm_manager" class="oe_stat_button" name="update_processes" type="object" title="Update" icon="fa-refresh">
             <field name="last_update" readonly="1"/>
           </button>
         </xpath>
@@ -53,6 +52,8 @@
         </xpath>
         <xpath expr="//field[@name='process_id']" position="after">
           <field name="pm_activity_id"/>
+          <field name="related_model"/>
+          <field name="related_id"/>
         </xpath>
       </field>
     </record>
@@ -74,13 +75,13 @@
       <field name="inherit_id" ref="syd_bpm.view_case_form"/>
       <field name="arch" type="xml">
         <xpath expr="//header" position="inside">
-          <button name="confirm_case" class="oe_highlight" type="object" 
-            string="Confirm Case" 
-            attrs="{'invisible':[('state','!=','in_progress')]}">
+          <button name="confirm_case" class="oe_highlight" type="object" string="Confirm Case" attrs="{'invisible':[('state','!=','in_progress')]}">
           </button>
         </xpath>
         <xpath expr="//field[@name='process_id']" position="after">
           <field name="pm_case_id"/>
+          <field name="related_model"/>
+          <field name="related_id"/>
         </xpath>
       </field>
     </record>
