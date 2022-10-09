@@ -305,7 +305,7 @@ class Case(models.Model):
     process_group_id = fields.Many2one('syd_bpm.process_group',related='process_id.process_group_id')
     task_executed_ids = fields.One2many('syd_bpm.task_executed','case_id',string="Task Executed")
     description = fields.Char('Case Description')
-    state=fields.Selection([('completed','Completed'),('cancelled','Cancelled'),('in_progress','In Progress')],default='in_progress')
+    state=fields.Selection([('in_progress','In Progress'),('completed','Completed'),('cancelled','Cancelled')],default='in_progress')
     case_object_ids = fields.One2many('syd_bpm.case_object','case_id',string="Case Objects")
     date_task_start = fields.Datetime('Date Start',compute="get_date_and_task")
     date_task_end = fields.Datetime('Date End',compute="get_date_and_task")
