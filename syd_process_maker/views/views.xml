@@ -46,7 +46,7 @@
       <field name="arch" type="xml">
         <xpath expr="//sheet" position="before">
           <header>
-            <button class="oe_highlight" name="start_activity" type="object" string="Start"/>
+            <button class="oe_highlight" name="start_activity" type="object" string="Start" attrs="{'invisible':[('status','!=','ACTIVE')]}"/>
             <field name="status" widget="statusbar"/>
           </header>
         </xpath>

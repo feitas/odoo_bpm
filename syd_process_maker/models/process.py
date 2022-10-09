@@ -13,7 +13,7 @@ import requests
 import json 
 import time
 import logging
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError,UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class ProcessGroup(BPMInterface,models.Model):
     pm_user_name = fields.Char(string='Name of the user of PM',required=True)
     
     
-    def _call(self, request, jsonobject=dict(), method='GET'):
+    def _call(self, request, query_param=False,jsonobject=dict(), method='GET'):
         auth = {
                 'grant_type': 'password',
                 'scope': '*',
@@ -56,12 +56,12 @@ class ProcessGroup(BPMInterface,models.Model):
             endresult = requests.get(self.pm_url+'/api/1.0/' + request, params = jsonobject, headers=headers )
         if (method == 'POST'):
             headers.update({'Content-Type': 'application/json'})
-            endresult = requests.post(self.pm_url+'/api/1.0/' + request, data = json.dumps(jsonobject), headers=headers)
+            endresult = requests.post(self.pm_url+'/api/1.0/' + request, params = query_param, data = json.dumps(jsonobject), headers=headers)
         if (method == 'PUT'):
             headers.update({'Content-Type': 'application/json'})
             endresult = requests.put(self.pm_url+'/api/1.0/' + request, data = jsonobject, headers=headers)
         if (not bool(endresult) or not endresult.ok):
-            raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
+            raise  UserError(str(endresult.status_code)+"-" + str(endresult.content))
         if bool(endresult.content): 
             if 'json' in endresult.headers['Content-Type']:
                 _res = json.loads(endresult.content)
@@ -237,7 +237,7 @@ class ProcessGroup(BPMInterface,models.Model):
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
-        res = self._call(f'process_events/{pm_process_id}', par, method='POST')
+        res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
         process_id.pm_process_id = res.get('process_id')
         process_id.description = res.get('process')['description']
@@ -282,12 +282,18 @@ class ProcessGroup(BPMInterface,models.Model):
                 ]
                 task = self.env['syd_bpm.case'].search(_domain)
                 if not task:
+                    _state='in_progress'
+                    if item.get('status') and item.get('status')=='CLOSED':
+                        _state = 'cancelled'
+                    elif item.get('status') and item.get('status')=='COMPLETED':
+                        _state = 'completed'
                     _val = {
                         'pm_case_id': item.get('id'),
                         'name': item.get('element_name'),
                         'process_id': process_id.id,
                         'related_model':related_model,
-                        'related_id':int(related_id) if isinstance(related_id, int) else str(related_id)
+                        'related_id':int(related_id) if isinstance(related_id, int) else str(related_id),
+                        'state':_state,
                     }
                     self.env['syd_bpm.case'].create(_val)
         else:
@@ -503,8 +509,7 @@ class Activity(models.Model):
     status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
     
     def start_activity(self):
-        self.ensure_one()
-        process = self.env['syd_bpm.process'].search([('name','=',self.pm_process_name)], limit=1)
+        pass
 
     
     
@@ -525,12 +530,40 @@ class Case(models.Model):
                 "form_input_1": "test"
             }
         }
-        res = self.process_id.process_group_id._call(f'tasks/%s' % self.pm_case_id, json.dumps(_data), method='PUT')
-        return res
+        res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
+        _logger.warning(res)
+        if res:
+            if res.get('status') and res.get('status')=='CLOSED':
+                self.state='completed'
+            params = {
+                'process_request_id': int(self.process_id.pm_process_id)
+            }
+            pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
+            if pm_tasks.get('data'):
+                for item in pm_tasks.get('data'):
+                    _domain = [
+                        ('pm_case_id', '=', item.get('id')),
+                    ]
+                    task = self.env['syd_bpm.case'].search(_domain)
+                    if not task:
+                        _state='in_progress'
+                        if item.get('status') and item.get('status')=='CLOSED':
+                            _state = 'cancelled'
+                        elif item.get('status') and item.get('status')=='COMPLETED':
+                            _state = 'completed'
+                        _val = {
+                            'pm_case_id': item.get('id'),
+                            'name': item.get('element_name'),
+                            'process_id': self.process_id.id,
+                            'related_model':self.related_model,
+                            'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
+                            'state':_state,
+                        }
+                        self.env['syd_bpm.case'].create(_val)
+            else:
+                _logger.warning(pm_tasks)
+        return True
    
-    
-    
-                 
 
 class TaskExecuted(models.Model):
     _inherit = 'syd_bpm.task_executed'
