@@ -90,6 +90,11 @@ class ProcessGroup(BPMInterface,models.Model):
 
     @api.model
     def _get_group_list(self):
+        """ Returns all groups that the user has access to
+        :url:/groups
+        :param
+        :returns: list -- group data
+        """
         group_definition = self._call('groups')
         return group_definition['data']
         
@@ -223,9 +228,12 @@ class ProcessGroup(BPMInterface,models.Model):
     
     
     
-    def start_process(self, process_id, activity_id):
+    def start_process(self, process_id, activity_id,related_model=False,related_id=False):
         # POST /cases
         self.ensure_one()
+        _logger.warning(f'related_model:{related_model}')
+        _logger.warning(f'related_id:{related_id}')
+        _logger.warning(f'process_id:{process_id}')
         pm_process_id = process_id.pm_process_id
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
         res = self._call(f'process_events/{pm_process_id}', par, method='POST')
@@ -239,22 +247,27 @@ class ProcessGroup(BPMInterface,models.Model):
             ('pm_activity_id', '=', res.get('id'))
         ]
         request_id = self.env['syd_bpm.activity'].search(_domain, limit=1)
+        if related_id:
+            related_record = self.env[related_model].search([('id','=',int(related_id))])
         if not request_id:
             _val = {
-                'name': res.get('name'),
+                'name': '-'.join((res.get('name'),related_record.name)) if related_record else res.get('name'),
                 'type': 'user-case',
                 'process_id': process_id.id,
                 'user_id': res.get('user_id'),
                 'pm_activity_id': res.get('id'),
                 'status': res.get('status'),
+                'related_model':related_model,
+                'related_id':int(related_id) if isinstance(related_id, int) else str(related_id)
             }
             request_id = self.env['syd_bpm.activity'].create(_val)
         else:
-            request_id.name = res.get('name')
+            request_id.name = '-'.join((res.get('name'),related_record.name)) if related_record else res.get('name')
             request_id.process_id = process_id.id
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
-        
+        if related_record:
+            related_record.sudo().write({'pm_activity_id':int(request_id.id)})
         # get tasks by process_request_id
         params = {
             'process_request_id': res.get('id')
@@ -271,7 +284,9 @@ class ProcessGroup(BPMInterface,models.Model):
                     _val = {
                         'pm_case_id': item.get('id'),
                         'name': item.get('element_name'),
-                        'process_id': process_id.id
+                        'process_id': process_id.id,
+                        'related_model':related_model,
+                        'related_id':int(related_id) if isinstance(related_id, int) else str(related_id)
                     }
                     self.env['syd_bpm.case'].create(_val)
         else:
@@ -464,13 +479,16 @@ class Process(models.Model):
     pm_process_id = fields.Char(string='Process Maker ID',required=False)
 
     def test_create_new_process(self):
-        self.process_group_id.start_process(self, None)
+        if self.pm_process_id:
+            self.process_group_id.start_process(self, None)
 
    
 class Activity(models.Model):
     _inherit = 'syd_bpm.activity'
     
     pm_activity_id = fields.Char(string='Process Maker ID', required=False)
+    related_model = fields.Char(string='Related Model')
+    related_id = fields.Char(string='Related Record ID')
     status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
     
     def start_activity(self):
@@ -481,6 +499,8 @@ class Case(models.Model):
     _inherit = 'syd_bpm.case'
     
     pm_case_id = fields.Char(string='Process Maker ID', required=False)
+    related_model = fields.Char(string='Related Model')
+    related_id = fields.Char(string='Related Record ID')
 
     def confirm_case(self):
         """
