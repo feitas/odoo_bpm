@@ -29,7 +29,7 @@ class ProcessGroup(BPMInterface,models.Model):
     pm_username = fields.Char(string='PM Username',required=True)
     pm_password = fields.Char(string='PM Password',required=True)
     
-    pm_user_name = fields.Char(string='Nome of the user of PM',required=True)
+    pm_user_name = fields.Char(string='Name of the user of PM',required=True)
     
     
     def _call(self, request, jsonobject=dict(), method='GET'):
@@ -55,7 +55,8 @@ class ProcessGroup(BPMInterface,models.Model):
         if (method == 'GET'):
             endresult = requests.get(self.pm_url+'/api/1.0/' + request, params = jsonobject, headers=headers )
         if (method == 'POST'):
-            endresult = requests.post(self.pm_url+'/api/1.0/' + request, params = jsonobject, headers=headers)
+            headers.update({'Content-Type': 'application/json'})
+            endresult = requests.post(self.pm_url+'/api/1.0/' + request, data = json.dumps(jsonobject), headers=headers)
         if (method == 'PUT'):
             headers.update({'Content-Type': 'application/json'})
             endresult = requests.put(self.pm_url+'/api/1.0/' + request, data = jsonobject, headers=headers)
@@ -118,7 +119,10 @@ class ProcessGroup(BPMInterface,models.Model):
         starting_activities = self._call('project/%s/starting-tasks' %process_id )
         return starting_activities
         
-    
+    @api.model
+    def _get_user_list(self):
+        user_definition = self._call('users')
+        return user_definition['data']
         
     @api.model
     def _route_case(self,case_id,del_index=False):
@@ -231,9 +235,6 @@ class ProcessGroup(BPMInterface,models.Model):
     def start_process(self, process_id, activity_id,related_model=False,related_id=False):
         # POST /cases
         self.ensure_one()
-        _logger.warning(f'related_model:{related_model}')
-        _logger.warning(f'related_id:{related_id}')
-        _logger.warning(f'process_id:{process_id}')
         pm_process_id = process_id.pm_process_id
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
         res = self._call(f'process_events/{pm_process_id}', par, method='POST')
@@ -258,7 +259,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 'pm_activity_id': res.get('id'),
                 'status': res.get('status'),
                 'related_model':related_model,
-                'related_id':int(related_id) if isinstance(related_id, int) else str(related_id)
+                'related_id':related_id if isinstance(related_id, str) else str(related_id)
             }
             request_id = self.env['syd_bpm.activity'].create(_val)
         else:
@@ -301,6 +302,7 @@ class ProcessGroup(BPMInterface,models.Model):
             process_list = self._get_process_list()
             request_list = self._get_request_list()
             role_list = self._get_group_list()
+            user_list = self._get_user_list()
             for process in process_list:
                 process_id = self.env['syd_bpm.process'].search([('pm_process_id','=',process['id'])],limit=1)
                 if not process_id or not process_id.locked:
@@ -405,7 +407,16 @@ class ProcessGroup(BPMInterface,models.Model):
             for role in role_list:
                 role_id = self.env['syd_bpm.process_role'].get_or_create_process_role(role['name'])
                 role_id.pm_group_id = role.get("id")
-
+            pm_user_name_list = [user['username'] for user in user_list]
+            odoo_user_list = self.env['res.users'].search([])
+            odoo_user_name_list = [user.name for user in odoo_user_list]
+            upgrade_val = []
+            for odoo_user in odoo_user_list:
+                if odoo_user.name not in pm_user_name_list:
+                    _email = odoo_user.email if odoo_user.email else ''.join((odoo_user.name,'@noway.com'))
+                    par = {'username':odoo_user.name,'email':_email,'status':'ACTIVE','firstname':'email','lastname':'email','password':'88888888'}
+                    res = self._call(f'users', par, method='POST')
+                    _logger.warning(f'res:{res}')
             pgroup.last_update = fields.Datetime.now()
 
             return True
@@ -492,7 +503,9 @@ class Activity(models.Model):
     status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
     
     def start_activity(self):
-        pass
+        self.ensure_one()
+        process = self.env['syd_bpm.process'].search([('name','=',self.pm_process_name)], limit=1)
+
     
     
 class Case(models.Model):
