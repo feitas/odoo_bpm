@@ -530,39 +530,41 @@ class Case(models.Model):
                 "form_input_1": "test"
             }
         }
-        res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
-        _logger.warning(res)
-        if res:
-            if res.get('status') and res.get('status')=='CLOSED':
-                self.state='completed'
-            params = {
-                'process_request_id': int(self.process_id.pm_process_id)
-            }
-            pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
-            if pm_tasks.get('data'):
-                for item in pm_tasks.get('data'):
-                    _domain = [
-                        ('pm_case_id', '=', item.get('id')),
-                    ]
-                    task = self.env['syd_bpm.case'].search(_domain)
-                    if not task:
-                        _state='in_progress'
-                        if item.get('status') and item.get('status')=='CLOSED':
-                            _state = 'cancelled'
-                        elif item.get('status') and item.get('status')=='COMPLETED':
-                            _state = 'completed'
-                        _val = {
-                            'pm_case_id': item.get('id'),
-                            'name': item.get('element_name'),
-                            'process_id': self.process_id.id,
-                            'related_model':self.related_model,
-                            'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
-                            'state':_state,
-                        }
-                        self.env['syd_bpm.case'].create(_val)
-            else:
-                _logger.warning(pm_tasks)
-        return True
+        _logger.warning(self.process_id)
+        if self.process_id:
+            res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
+            _logger.warning(res)
+            if res:
+                if res.get('status') and res.get('status')=='CLOSED':
+                    self.state='completed'
+                params = {
+                    'process_request_id': int(self.process_id.pm_process_id)
+                }
+                pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
+                if pm_tasks.get('data'):
+                    for item in pm_tasks.get('data'):
+                        _domain = [
+                            ('pm_case_id', '=', item.get('id')),
+                        ]
+                        task = self.env['syd_bpm.case'].search(_domain)
+                        if not task:
+                            _state='in_progress'
+                            if item.get('status') and item.get('status')=='CLOSED':
+                                _state = 'cancelled'
+                            elif item.get('status') and item.get('status')=='COMPLETED':
+                                _state = 'completed'
+                            _val = {
+                                'pm_case_id': item.get('id'),
+                                'name': item.get('element_name'),
+                                'process_id': self.process_id.id,
+                                'related_model':self.related_model,
+                                'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
+                                'state':_state,
+                            }
+                            self.env['syd_bpm.case'].create(_val)
+                else:
+                    _logger.warning(pm_tasks)
+            return True
    
 
 class TaskExecuted(models.Model):

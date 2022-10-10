@@ -12,19 +12,10 @@
 					<page string="PM Info">
 						<group>
 							<group>
-								<field name="pm_process_name"/>
+								<field name="pm_process_id"/>
 							</group>
 							<group>
 								<field name="pm_activity_id">
-									<!-- <tree string="Activity">
-								<field name="sequence" widget="handle"/>
-								<field name="name"/>
-								<field name="process_id"/>
-								<field name="type"/>
-								<field name="user_id"/>
-								<field name="related_model"/>
-								<field name="related_id"/>
-							</tree> -->
 								</field>
 							</group>
 						</group>
