@@ -84,7 +84,8 @@ class ProcessGroup(BPMInterface,models.Model):
     
     @api.model
     def _get_request_list(self):
-        request_definition = self._call('requests')
+        par = {'per_page': 100}
+        request_definition = self._call('requests',par)
         requests = request_definition['data']
         _logger.info("------- requests -------- %s" % str(requests))
         return requests
@@ -124,6 +125,12 @@ class ProcessGroup(BPMInterface,models.Model):
         user_definition = self._call('users')
         return user_definition['data']
         
+    @api.model
+    def _get_export_data_url(self,process_id):
+        _logger.warning(process_id)
+        url_definition = self._call(f'processes/{int(process_id)}/export', method='POST')
+        return url_definition
+
     @api.model
     def _route_case(self,case_id,del_index=False):
         # PUT /cases/{app_uid}/route-case
@@ -248,18 +255,18 @@ class ProcessGroup(BPMInterface,models.Model):
             ('pm_activity_id', '=', res.get('id'))
         ]
         request_id = self.env['syd_bpm.activity'].search(_domain, limit=1)
-        if related_id:
-            related_record = self.env[related_model].search([('id','=',int(related_id))])
+        related_record = self.env[related_model].search([('id','=',int(related_id))]) if related_id else False
         if not request_id:
             _val = {
                 'name': '-'.join((res.get('name'),related_record.name)) if related_record else res.get('name'),
+                'pm_user':res.get('user_id'),
                 'type': 'user-case',
                 'process_id': process_id.id,
                 'user_id': res.get('user_id'),
                 'pm_activity_id': res.get('id'),
                 'status': res.get('status'),
-                'related_model':related_model,
-                'related_id':related_id if isinstance(related_id, str) else str(related_id)
+                'related_model':related_model if related_model else '',
+                'related_id':related_id if related_id and isinstance(related_id, str) else str(related_id)
             }
             request_id = self.env['syd_bpm.activity'].create(_val)
         else:
@@ -267,6 +274,7 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.process_id = process_id.id
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
+            request_id.pm_user = res['user_id']
         if related_record:
             related_record.sudo().write({'pm_activity_id':int(request_id.id)})
         # get tasks by process_request_id
@@ -338,6 +346,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 if not request_id:
                     request_id = self.env['syd_bpm.activity'].create(
                                             {'name':request['name'],
+                                            'pm_user':request.get('user_id'),
                                             'type':'user-case',
                                             'process_id':process_id.id,
                                             'user_id':request['user_id'],
@@ -350,7 +359,7 @@ class ProcessGroup(BPMInterface,models.Model):
                     request_id.process_id = process_id.id
                     request_id.user_id = request['user_id']
                     request_id.pm_activity_id = request['id']
-
+                    request_id.pm_user = request['user_id']
 
                 #     activity_list = self._get_activity_list(process_id.pm_process_id)
                 #     act_not_to_delete = []
@@ -494,16 +503,20 @@ class Process(models.Model):
     
     
     pm_process_id = fields.Char(string='Process Maker ID',required=False)
+    export_data_url = fields.Char(string='Process Export URL')
 
     def test_create_new_process(self):
         if self.pm_process_id:
             self.process_group_id.start_process(self, None)
+        self.export_data_url = self.process_group_id._get_export_data_url(self.pm_process_id)
 
    
 class Activity(models.Model):
     _inherit = 'syd_bpm.activity'
     
-    pm_activity_id = fields.Char(string='Process Maker ID', required=False)
+    pm_requestor_id = fields.Many2one('res.users',string="Requestor")
+    pm_activity_id = fields.Char(string='Process Maker Request ID', required=False)
+    pm_user = fields.Char(string="Process Maker User ID")
     related_model = fields.Char(string='Related Model')
     related_id = fields.Char(string='Related Record ID')
     status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
@@ -516,6 +529,7 @@ class Activity(models.Model):
 class Case(models.Model):
     _inherit = 'syd_bpm.case'
     
+    pm_assigned_to = fields.Many2one('res.users',string="Assigned To")
     pm_case_id = fields.Char(string='Process Maker ID', required=False)
     related_model = fields.Char(string='Related Model')
     related_id = fields.Char(string='Related Record ID')

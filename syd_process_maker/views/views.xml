@@ -50,6 +50,9 @@
             <field name="status" widget="statusbar"/>
           </header>
         </xpath>
+        <field name="name" position="after">
+          <field name="pm_requestor_id"/>
+        </field>
         <xpath expr="//field[@name='process_id']" position="after">
           <field name="pm_activity_id"/>
           <field name="related_model"/>
@@ -78,6 +81,9 @@
           <button name="confirm_case" class="oe_highlight" type="object" string="Confirm Case" attrs="{'invisible':[('state','!=','in_progress')]}">
           </button>
         </xpath>
+        <field name="name" position="after">
+          <field name="pm_assigned_to"/>
+        </field>
         <xpath expr="//field[@name='process_id']" position="after">
           <field name="pm_case_id"/>
           <field name="related_model"/>
