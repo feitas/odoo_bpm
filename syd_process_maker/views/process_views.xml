@@ -11,6 +11,9 @@
                 <field name="process_group_id" position="after">
                     <field name="pm_process_id"/>
                 </field>
+                <field name="start_events" position="after">
+                    <field name="export_data_url"/>
+                </field>
             </field>
         </record>
     </data>
