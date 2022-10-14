@@ -113,6 +113,7 @@
           <sheet>
             <group>
               <field name="name"/>
+              <field name="description"/>
               <field name="category_id"/>
               <field name="date_deadline"/>
               <field name="attachment_ids" widget="many2many_tags" domain="[('process_id','=',active_id)]"/>
@@ -556,9 +557,7 @@
         <form string="Case">
           <header>
             <field name="state" widget="statusbar" />
-            <button name="cancel_case" class="oe_highlight" type="object" 
-              string="Cancel Case" attrs="{'invisible':[('state','!=','in_progress')]}" 
-              confirm="This action cannot be reverted. Are you sure?">
+            <button name="cancel_case" class="oe_highlight" type="object" string="Cancel Case" attrs="{'invisible':[('state','!=','in_progress')]}" confirm="This action cannot be reverted. Are you sure?">
             </button>
           </header>
           <sheet>

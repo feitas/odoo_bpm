@@ -30,6 +30,7 @@ class ProcessGroup(BPMInterface,models.Model):
     pm_password = fields.Char(string='PM Password',required=True)
     
     pm_user_name = fields.Char(string='Name of the user of PM',required=True)
+    pm_access_token = fields.Char()
     
     
     def _call(self, request, query_param=False,jsonobject=dict(), method='GET'):
@@ -48,12 +49,12 @@ class ProcessGroup(BPMInterface,models.Model):
         if ('error' in jsonresult) :
             raise ValidationError('{}'.format(result.error_description))
         access_token = jsonresult['access_token']
-        
+        self.pm_access_token = access_token if access_token else ''
         headers = {'Authorization': 'Bearer '+access_token}
         
         endresult = ''
         if (method == 'GET'):
-            endresult = requests.get(self.pm_url+'/api/1.0/' + request, params = jsonobject, headers=headers )
+            endresult = requests.get(self.pm_url+'/api/1.0/' + request, params = query_param, headers=headers )
         if (method == 'POST'):
             headers.update({'Content-Type': 'application/json'})
             endresult = requests.post(self.pm_url+'/api/1.0/' + request, params = query_param, data = json.dumps(jsonobject), headers=headers)
@@ -127,7 +128,6 @@ class ProcessGroup(BPMInterface,models.Model):
         
     @api.model
     def _get_export_data_url(self,process_id):
-        _logger.warning(process_id)
         url_definition = self._call(f'processes/{int(process_id)}/export', method='POST')
         return url_definition
 
@@ -217,7 +217,6 @@ class ProcessGroup(BPMInterface,models.Model):
         except :
             raise ValidationError(_('No ProcessMaker user to assign task'))
         
-        
     @api.model
     def _get_user_of_task(self,process_id,task_id):
         res = self._call('project/%s/activity/%s/assignee'%(process_id,task_id))
@@ -230,25 +229,23 @@ class ProcessGroup(BPMInterface,models.Model):
         res = self._call('project/%s/activity/%s/assignee'%(process_id,task_id),par,method='POST')
         return res
     
-    
     @api.model
     def _cancel_case(self,case_id):
         #/cases/{app_uid}/cancel
         res = self._call('cases/%s/cancel'%(case_id.pm_case_id),method='PUT')
         return res
     
-    
-    
     def start_process(self, process_id, activity_id,related_model=False,related_id=False):
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
+        # 'node_1' is setted for the 'Node Identifier' in the 'Start Event' element's 'Advanced' option in PM Designer for Process
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
         res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
         process_id.pm_process_id = res.get('process_id')
         process_id.description = res.get('process')['description']
-        process_id.start_events = str(res)
+        process_id.start_events = str(res.get('process')['start_events'])
         _domain = [
             ('name', '=', res.get('name')),
             ('process_id', '=', int(process_id.id)),
@@ -259,14 +256,15 @@ class ProcessGroup(BPMInterface,models.Model):
         if not request_id:
             _val = {
                 'name': '-'.join((res.get('name'),related_record.name)) if related_record else res.get('name'),
-                'pm_user':res.get('user_id'),
+                'pm_user':int(res.get('user_id')) if res.get('user_id') else False,
+                'pm_callable_id':res.get('callable_id'),
                 'type': 'user-case',
                 'process_id': process_id.id,
                 'user_id': res.get('user_id'),
                 'pm_activity_id': res.get('id'),
                 'status': res.get('status'),
                 'related_model':related_model if related_model else '',
-                'related_id':related_id if related_id and isinstance(related_id, str) else str(related_id)
+                'related_id':related_id if related_id and isinstance(related_id, str) else False
             }
             request_id = self.env['syd_bpm.activity'].create(_val)
         else:
@@ -274,15 +272,16 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.process_id = process_id.id
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
-            request_id.pm_user = res['user_id']
+            request_id.pm_user = int(res.get('user_id'))
+            request_id.pm_callable_id = res,get('callable_id')
         if related_record:
             related_record.sudo().write({'pm_activity_id':int(request_id.id)})
         # get tasks by process_request_id
         params = {
-            'process_request_id': res.get('id')
+            'process_request_id': request_id.pm_activity_id
         }
         pm_tasks = self._call(f'tasks', params, method='GET')
-        pprint(pm_tasks)
+        # pprint(pm_tasks)
         if pm_tasks.get('data'):
             for item in pm_tasks.get('data'):
                 _domain = [
@@ -291,6 +290,8 @@ class ProcessGroup(BPMInterface,models.Model):
                 task = self.env['syd_bpm.case'].search(_domain)
                 if not task:
                     _state='in_progress'
+                    if item.get('user_id'):
+                        user_id=self.env['res.users'].search([('id','=',item.get('user_id'))])
                     if item.get('status') and item.get('status')=='CLOSED':
                         _state = 'cancelled'
                     elif item.get('status') and item.get('status')=='COMPLETED':
@@ -299,13 +300,18 @@ class ProcessGroup(BPMInterface,models.Model):
                         'pm_case_id': item.get('id'),
                         'name': item.get('element_name'),
                         'process_id': process_id.id,
+                        'activity_id':request_id.id,
                         'related_model':related_model,
+                        'pm_assigned_to':user_id.id if user_id else False,
                         'related_id':int(related_id) if isinstance(related_id, int) else str(related_id),
                         'state':_state,
+                        'pm_element_id':item.get('element_id'),
+                        'pm_element_type':item.get('element_type'),
+                        'pm_element_name':item.get('element_name'),
                     }
                     self.env['syd_bpm.case'].create(_val)
         else:
-            _logger.warning(pm_tasks)
+            _logger.error(pm_tasks)
 
         return True
     
@@ -430,7 +436,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 if odoo_user.name not in pm_user_name_list:
                     _email = odoo_user.email if odoo_user.email else ''.join((odoo_user.name,'@noway.com'))
                     par = {'username':odoo_user.name,'email':_email,'status':'ACTIVE','firstname':'email','lastname':'email','password':'88888888'}
-                    res = self._call(f'users', par, method='POST')
+                    res = self._call(f'users', jsonobject=par, method='POST')
                     _logger.warning(f'res:{res}')
             pgroup.last_update = fields.Datetime.now()
 
@@ -502,24 +508,32 @@ class Process(models.Model):
     _inherit = 'syd_bpm.process'
     
     
-    pm_process_id = fields.Char(string='Process Maker ID',required=False)
+    pm_process_id = fields.Char(string='Process Maker Process ID',required=False)
     export_data_url = fields.Char(string='Process Export URL')
+    export_data = fields.Char(string='Process Export')
 
     def test_create_new_process(self):
         if self.pm_process_id:
             self.process_group_id.start_process(self, None)
-        self.export_data_url = self.process_group_id._get_export_data_url(self.pm_process_id)
+        data_url_str = self.process_group_id._get_export_data_url(self.pm_process_id)
+        if data_url_str:
+            self.export_data_url = data_url_str.get('url')
+            if self.export_data_url:
+                _headers = {'Authorization': 'Bearer '+self.process_group_id.pm_access_token}
+                res = requests.get(self.export_data_url, headers=_headers)
+                if res.status_code == 200 and res.ok:
+                    self.export_data = res.content
 
    
 class Activity(models.Model):
     _inherit = 'syd_bpm.activity'
     
-    pm_requestor_id = fields.Many2one('res.users',string="Requestor")
+    pm_callable_id = fields.Char(string='Process Maker Node Identifier ID')
     pm_activity_id = fields.Char(string='Process Maker Request ID', required=False)
     pm_user = fields.Char(string="Process Maker User ID")
     related_model = fields.Char(string='Related Model')
     related_id = fields.Char(string='Related Record ID')
-    status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELLED', 'CANCELLED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
+    status = fields.Selection([('ACTIVE', 'IN PROGRESS'), ('ERROR', 'ERROR'), ('CANCELED', 'CANCELED'),('COMPLETED', 'COMPLETED')],string='Status', default='ACTIVE')
     
     def start_activity(self):
         pass
@@ -530,9 +544,19 @@ class Case(models.Model):
     _inherit = 'syd_bpm.case'
     
     pm_assigned_to = fields.Many2one('res.users',string="Assigned To")
-    pm_case_id = fields.Char(string='Process Maker ID', required=False)
+    pm_case_id = fields.Char(string='Process Maker Task ID', required=False)
+    activity_id = fields.Many2one('syd_bpm.activity',string="Activity")
+    pm_element_id = fields.Char(string='Process Maker Element ID')
+    pm_element_type = fields.Char(string='Process Maker Element Type')
+    pm_element_name = fields.Char(string='Process Maker Element Name')
     related_model = fields.Char(string='Related Model')
     related_id = fields.Char(string='Related Record ID')
+    is_assigned_to = fields.Boolean(string='Is Assigned To',compute='_compute_is_assigned_to')
+
+    def _compute_is_assigned_to(self):
+        for record in self:
+            record.is_assigned_to = bool(record.pm_assigned_to.id == self.env.uid)
+        
 
     def confirm_case(self):
         """
@@ -544,10 +568,8 @@ class Case(models.Model):
                 "form_input_1": "test"
             }
         }
-        _logger.warning(self.process_id)
         if self.process_id:
             res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
-            _logger.warning(res)
             if res:
                 if res.get('status') and res.get('status')=='CLOSED':
                     self.state='completed'
