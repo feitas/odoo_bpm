@@ -512,14 +512,6 @@ class Process(models.Model):
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
 
-    def _parse_json(self):
-        """
-        TODO 解析下载的process json文件，写到Dynamic Form
-        """
-        _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
-        import base64
-        self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
-
     def _get_process_export_json(self):
         """
         Get process export url form the api 'processes/{process_id}/export', method='POST
@@ -527,6 +519,19 @@ class Process(models.Model):
         data_url_str = self.process_group_id._get_export_data_url(self.pm_process_id)
         if data_url_str:
             self.export_data_url = data_url_str.get('url')
+
+    def _parse_json(self):
+        """
+        Parse the downloaded process json file
+        """
+        _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
+        import base64
+        self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
+
+    def _create_dynamic_form(self):
+        """
+        TODO 解析下载的process json文件，写到Dynamic Form
+        """
 
     def button_get_process_export_json(self):
         self._get_process_export_json()
