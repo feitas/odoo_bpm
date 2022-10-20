@@ -511,6 +511,14 @@ class Process(models.Model):
     pm_process_id = fields.Char(string='Process Maker Process ID',required=False)
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
+    
+    def _parse_json(self):
+        """
+        TODO 解析下载的process json文件，写到Dynamic Form
+        """
+        # 1.找到扩展名为该process名称+'.json'的文件，用base64进行解码
+        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
+        pass
 
     def test_create_new_process(self):
         if self.pm_process_id:
@@ -562,6 +570,7 @@ class Case(models.Model):
         """
         /tasks/{task_id} Update a task
         """
+        # TODO 通过process_id找到对应Process的Dynamic Form, 在Dynamic Form找到同名的Case并获取所需的字段
         _data = {
             "status": "COMPLETED",
             "data": {
