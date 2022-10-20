@@ -511,26 +511,33 @@ class Process(models.Model):
     pm_process_id = fields.Char(string='Process Maker Process ID',required=False)
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
-    
+
     def _parse_json(self):
         """
         TODO 解析下载的process json文件，写到Dynamic Form
         """
-        # 1.找到扩展名为该process名称+'.json'的文件，用base64进行解码
-        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
-        pass
+        _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
+        import base64
+        self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
 
-    def test_create_new_process(self):
-        if self.pm_process_id:
-            self.process_group_id.start_process(self, None)
+    def _get_process_export_json(self):
+        """
+        Get process export url form the api 'processes/{process_id}/export', method='POST
+        """
         data_url_str = self.process_group_id._get_export_data_url(self.pm_process_id)
         if data_url_str:
             self.export_data_url = data_url_str.get('url')
-            if self.export_data_url:
-                _headers = {'Authorization': 'Bearer '+self.process_group_id.pm_access_token}
-                res = requests.get(self.export_data_url, headers=_headers)
-                if res.status_code == 200 and res.ok:
-                    self.export_data = res.content
+
+    def button_get_process_export_json(self):
+        self._get_process_export_json()
+
+    def button_parse_process_json(self):
+        self._parse_json()
+        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
+
+    def button_create_new_request(self):
+        if self.pm_process_id:
+            self.process_group_id.start_process(self, None)
 
    
 class Activity(models.Model):
