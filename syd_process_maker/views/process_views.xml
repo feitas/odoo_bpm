@@ -6,12 +6,14 @@
             <field name="inherit_id" ref="syd_bpm.process_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
+                    <!-- # TODO 加一个点击按钮，解析下载的process json 文件 -->
                     <button name="test_create_new_process" class="oe_highlight" type="object" string="Sync Process"></button>
                 </xpath>
                 <field name="process_group_id" position="after">
                     <field name="pm_process_id"/>
                 </field>
                 <field name="start_events" position="after">
+                    <!-- # TODO 改成可点击跳转的URL -->
                     <field name="export_data_url"/>
                 </field>
             </field>

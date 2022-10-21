@@ -49,6 +49,7 @@ class DynamicForm(models.Model):
     pm_activity_ids = fields.One2many('syd_bpm.activity','dynamic_form_id')
     dynamic_form_line_ids = fields.One2many('syd_bpm.dynamic_form_line','dynamic_form_id')
     dynamic_wizard_id = fields.Many2one('syd_dynamic_wizard.wizard.config')
+    # TODO　添加字段Element Name
     state = fields.Selection([('draft','Draft'),('done','Done')],default='draft',string='State')
     
     
