@@ -514,14 +514,6 @@ class Process(models.Model):
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
     
-    def _parse_json(self):
-        """
-        TODO 解析下载的process json文件，写到Dynamic Form
-        """
-        # 1.找到扩展名为该process名称+'.json'的文件，用base64进行解码
-        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
-        pass
-
     def _get_process_export_json(self):
         """
         Get process export url form the api 'processes/{process_id}/export', method='POST
