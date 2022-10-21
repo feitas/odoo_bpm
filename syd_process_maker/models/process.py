@@ -558,13 +558,12 @@ class Process(models.Model):
     def button_parse_process_json(self):
         self._parse_json()
         self._create_dynamic_form_from_parsed_files()
-
-    def button_create_new_request(self):
-        if self.pm_process_id:
-            self.process_group_id.start_process(self, None)
     
     @api.model
     def action_create_new_request(self,related_id=False,related_model=False):
+        """
+        For the external action 'Create Request' menu
+        """
         _process_record = self.env['syd_bpm.process'].search([('pm_callable_id','=',related_model)],limit=1)
         if _process_record and _process_record.process_group_id:
             _process_record.process_group_id.start_process(process_id=_process_record,related_model=related_model,related_id=related_id)
