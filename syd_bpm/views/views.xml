@@ -143,7 +143,7 @@
                   <tree string="Screens" editable="bottom">
                     <field name="name"/>
                     <field name="process_id"/>
-                    <field name="pm_case_id"/>
+                    <field name="pm_screen_id"/>
                     <field name="pm_screen_label"/>
                     <field name="pm_screen_type"/>
                   </tree>

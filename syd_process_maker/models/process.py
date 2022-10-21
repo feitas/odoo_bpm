@@ -244,8 +244,9 @@ class ProcessGroup(BPMInterface,models.Model):
         res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
         process_id.pm_process_id = res.get('process_id')
-        process_id.description = res.get('process')['description']
-        process_id.start_events = str(res.get('process')['start_events'])
+        _process_dict = res.get('process')
+        if _process_dict:
+            process_id.write({'description':_process_dict['description'],'start_events':str(_process_dict['start_events']),'pm_callable_id':_process_dict['start_events'][0].get('ownerProcessId')})
         _domain = [
             ('name', '=', res.get('name')),
             ('process_id', '=', int(process_id.id)),
@@ -273,7 +274,7 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
             request_id.pm_user = int(res.get('user_id'))
-            request_id.pm_callable_id = res,get('callable_id')
+            request_id.pm_callable_id = res.get('callable_id')
         if related_record:
             related_record.sudo().write({'pm_activity_id':int(request_id.id)})
         # get tasks by process_request_id
@@ -335,6 +336,7 @@ class ProcessGroup(BPMInterface,models.Model):
                                                            {'name':process['name'],
                                                             'description':process['description'],
                                                             'pm_process_id':process['id'],
+                                                            'pm_callable_id':process.get('start_events')[0].get('ownerProcessId'),
                                                             'process_group_id':pgroup.id,
                                                             'category_id':self.env['syd_bpm.process_category'].get_or_create_category(pm_category)
                                                             }
@@ -508,7 +510,8 @@ class Process(models.Model):
     _inherit = 'syd_bpm.process'
     
     
-    pm_process_id = fields.Char(string='Process Maker Process ID',required=False)
+    pm_process_id = fields.Char(string='Process Maker Process ID')
+    pm_callable_id = fields.Char(string='Process Maker Node Identifier ID')
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
 
