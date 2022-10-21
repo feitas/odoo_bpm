@@ -244,8 +244,9 @@ class ProcessGroup(BPMInterface,models.Model):
         res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
         process_id.pm_process_id = res.get('process_id')
-        process_id.description = res.get('process')['description']
-        process_id.start_events = str(res.get('process')['start_events'])
+        _process_dict = res.get('process')
+        if _process_dict:
+            process_id.write({'description':_process_dict['description'],'start_events':str(_process_dict['start_events']),'pm_callable_id':_process_dict['start_events'][0].get('ownerProcessId')})
         _domain = [
             ('name', '=', res.get('name')),
             ('process_id', '=', int(process_id.id)),
@@ -273,7 +274,7 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
             request_id.pm_user = int(res.get('user_id'))
-            request_id.pm_callable_id = res,get('callable_id')
+            request_id.pm_callable_id = res.get('callable_id')
         if related_record:
             related_record.sudo().write({'pm_activity_id':int(request_id.id)})
         # get tasks by process_request_id
@@ -335,6 +336,7 @@ class ProcessGroup(BPMInterface,models.Model):
                                                            {'name':process['name'],
                                                             'description':process['description'],
                                                             'pm_process_id':process['id'],
+                                                            'pm_callable_id':process.get('start_events')[0].get('ownerProcessId'),
                                                             'process_group_id':pgroup.id,
                                                             'category_id':self.env['syd_bpm.process_category'].get_or_create_category(pm_category)
                                                             }
@@ -508,29 +510,59 @@ class Process(models.Model):
     _inherit = 'syd_bpm.process'
     
     
-    pm_process_id = fields.Char(string='Process Maker Process ID',required=False)
+    pm_process_id = fields.Char(string='Process Maker Process ID')
+    pm_callable_id = fields.Char(string='Process Maker Node Identifier ID')
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
-    
-    def _parse_json(self):
-        """
-        TODO 解析下载的process json文件，写到Dynamic Form
-        """
-        # 1.找到扩展名为该process名称+'.json'的文件，用base64进行解码
-        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
-        pass
 
-    def test_create_new_process(self):
-        if self.pm_process_id:
-            self.process_group_id.start_process(self, None)
+    def _get_process_export_json(self):
+        """
+        Get process export url form the api 'processes/{process_id}/export', method='POST
+        """
         data_url_str = self.process_group_id._get_export_data_url(self.pm_process_id)
         if data_url_str:
             self.export_data_url = data_url_str.get('url')
-            if self.export_data_url:
-                _headers = {'Authorization': 'Bearer '+self.process_group_id.pm_access_token}
-                res = requests.get(self.export_data_url, headers=_headers)
-                if res.status_code == 200 and res.ok:
-                    self.export_data = res.content
+
+    def _parse_json(self):
+        """
+        Parse the downloaded process json file
+        """
+        _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
+        import base64
+        self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
+
+    def _create_dynamic_form_from_parsed_files(self):
+        """
+        TODO 解析下载的process json文件，写到Dynamic Form
+        """
+        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
+        # Name->Screen Name,ID->Screen ID
+        if self.export_data and isinstance(self.export_data, str):
+            _data_dict = json.loads(self.export_data)
+            _logger.warning(_data_dict)
+            _screen_list = _data_dict.get('screens')
+            for _screen in _screen_list:
+                _screen_record = self.env['syd_bpm.dynamic_form'].search([('pm_screen_id','=',_screen.get('id')),('name','=',_screen.get('config')[0].get('name'))])
+                if not _screen_record:
+                    _val = {
+                        'pm_screen_id': _screen.get('id'),
+                        'name': _screen.get('config')[0].get('name'),
+                        'process_id':self.id,
+                        'pm_screen_label': _screen.get('title'),
+                        'pm_screen_type':_screen.get('type')
+                    }
+                    _screen_id = self.env['syd_bpm.dynamic_form'].create(_val)
+
+    def button_get_process_export_json(self):
+        self._get_process_export_json()
+
+    def button_parse_process_json(self):
+        self._parse_json()
+        self._create_dynamic_form_from_parsed_files()
+
+    def button_create_new_request(self):
+        if self.pm_process_id:
+            self.process_group_id.start_process(self, None)
 
    
 class Activity(models.Model):
@@ -546,7 +578,6 @@ class Activity(models.Model):
     def start_activity(self):
         pass
 
-    
     
 class Case(models.Model):
     _inherit = 'syd_bpm.case'
@@ -626,11 +657,3 @@ class TaskExecuted(models.Model):
         res = super(TaskExecuted,self)._val_note(user_id)                                          
         res['pm_del_index'] = self.pm_del_index
         return res
-    
-   
-    
-    
-
-    
-
-    

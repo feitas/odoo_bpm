@@ -21,17 +21,22 @@
 
 
     'category': 'project',
-    'version': '1.0.0.1',
+    'version': '14.0.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['syd_bpm'],
+    'depends': ['syd_bpm','web'],
 
     # always loaded
     'data': [
-        
         'views/views.xml',
         'views/process_views.xml',
-        
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'syd_process_maker/static/src/js/*',
+        ],
+    },
+    'qweb': [
     ],
     'installable': True,
     'application': False,
