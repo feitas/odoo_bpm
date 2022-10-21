@@ -1069,7 +1069,7 @@ msgstr ""
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_processes
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_sub_menu_processes
 msgid "Processes"
-msgstr ""
+msgstr "流程"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_role_activity__type__random
