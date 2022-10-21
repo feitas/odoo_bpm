@@ -528,17 +528,34 @@ class Process(models.Model):
         import base64
         self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
 
-    def _create_dynamic_form(self):
+    def _create_dynamic_form_from_parsed_files(self):
         """
         TODO 解析下载的process json文件，写到Dynamic Form
         """
+        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
+        # Name->Screen Name,ID->Screen ID
+        if self.export_data and isinstance(self.export_data, str):
+            _data_dict = json.loads(self.export_data)
+            _logger.warning(_data_dict)
+            _screen_list = _data_dict.get('screens')
+            for _screen in _screen_list:
+                _screen_record = self.env['syd_bpm.dynamic_form'].search([('pm_screen_id','=',_screen.get('id')),('name','=',_screen.get('config')[0].get('name'))])
+                if not _screen_record:
+                    _val = {
+                        'pm_screen_id': _screen.get('id'),
+                        'name': _screen.get('config')[0].get('name'),
+                        'process_id':self.id,
+                        'pm_screen_label': _screen.get('title'),
+                        'pm_screen_type':_screen.get('type')
+                    }
+                    _screen_id = self.env['syd_bpm.dynamic_form'].create(_val)
 
     def button_get_process_export_json(self):
         self._get_process_export_json()
 
     def button_parse_process_json(self):
         self._parse_json()
-        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
+        self._create_dynamic_form_from_parsed_files()
 
     def button_create_new_request(self):
         if self.pm_process_id:
@@ -558,7 +575,6 @@ class Activity(models.Model):
     def start_activity(self):
         pass
 
-    
     
 class Case(models.Model):
     _inherit = 'syd_bpm.case'
@@ -638,11 +654,3 @@ class TaskExecuted(models.Model):
         res = super(TaskExecuted,self)._val_note(user_id)                                          
         res['pm_del_index'] = self.pm_del_index
         return res
-    
-   
-    
-    
-
-    
-
-    
