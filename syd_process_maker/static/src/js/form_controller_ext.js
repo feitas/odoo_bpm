@@ -59,8 +59,6 @@ odoo.define('syd_process_maker.FormController', function (require) {
          */
         _onCreateResquest: async function () {
             const handle = await this.model.createResquest(this.handle);
-            this.handle = handle;
-            this._updateControlPanel();
         },
     })
 
