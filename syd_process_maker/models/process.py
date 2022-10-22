@@ -235,7 +235,7 @@ class ProcessGroup(BPMInterface,models.Model):
         res = self._call('cases/%s/cancel'%(case_id.pm_case_id),method='PUT')
         return res
     
-    def start_process(self, process_id, activity_id,related_model=False,related_id=False):
+    def start_process(self, process_id,related_model=False,related_id=False):
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
@@ -244,8 +244,9 @@ class ProcessGroup(BPMInterface,models.Model):
         res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
         process_id.pm_process_id = res.get('process_id')
-        process_id.description = res.get('process')['description']
-        process_id.start_events = str(res.get('process')['start_events'])
+        _process_dict = res.get('process')
+        if _process_dict:
+            process_id.write({'description':_process_dict['description'],'start_events':str(_process_dict['start_events']),'pm_callable_id':_process_dict['start_events'][0].get('ownerProcessId')})
         _domain = [
             ('name', '=', res.get('name')),
             ('process_id', '=', int(process_id.id)),
@@ -264,7 +265,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 'pm_activity_id': res.get('id'),
                 'status': res.get('status'),
                 'related_model':related_model if related_model else '',
-                'related_id':related_id if related_id and isinstance(related_id, str) else False
+                'related_id':related_id if related_id and isinstance(related_id, (int,str)) else False
             }
             request_id = self.env['syd_bpm.activity'].create(_val)
         else:
@@ -273,9 +274,7 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.user_id = res.get('user_id')
             request_id.pm_activity_id = res.get('id')
             request_id.pm_user = int(res.get('user_id'))
-            request_id.pm_callable_id = res,get('callable_id')
-        if related_record:
-            related_record.sudo().write({'pm_activity_id':int(request_id.id)})
+            request_id.pm_callable_id = res.get('callable_id')
         # get tasks by process_request_id
         params = {
             'process_request_id': request_id.pm_activity_id
@@ -331,10 +330,12 @@ class ProcessGroup(BPMInterface,models.Model):
                     if process['process_category_id'] != '':
                         pm_category = self._get_category_info(int(process['process_category_id']))['name']
                     if not process_id:
+                        _pm_callable_id = process.get('start_events')[0].get('ownerProcessId') if process.get('start_events') and len(process.get('start_events'))>0 else False
                         process_id = self.env['syd_bpm.process'].create(
                                                            {'name':process['name'],
                                                             'description':process['description'],
                                                             'pm_process_id':process['id'],
+                                                            'pm_callable_id':_pm_callable_id,
                                                             'process_group_id':pgroup.id,
                                                             'category_id':self.env['syd_bpm.process_category'].get_or_create_category(pm_category)
                                                             }
@@ -508,23 +509,68 @@ class Process(models.Model):
     _inherit = 'syd_bpm.process'
     
     
-    pm_process_id = fields.Char(string='Process Maker Process ID',required=False)
+    pm_process_id = fields.Char(string='Process Maker Process ID')
+    pm_callable_id = fields.Char(string='Process Maker Node Identifier ID')
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
-
-    def test_create_new_process(self):
-        if self.pm_process_id:
-            self.process_group_id.start_process(self, None)
+    
+    def _get_process_export_json(self):
+        """
+        Get process export url form the api 'processes/{process_id}/export', method='POST
+        """
         data_url_str = self.process_group_id._get_export_data_url(self.pm_process_id)
         if data_url_str:
             self.export_data_url = data_url_str.get('url')
-            if self.export_data_url:
-                _headers = {'Authorization': 'Bearer '+self.process_group_id.pm_access_token}
-                res = requests.get(self.export_data_url, headers=_headers)
-                if res.status_code == 200 and res.ok:
-                    self.export_data = res.content
 
-   
+    def _parse_json(self):
+        """
+        Parse the downloaded process json file
+        """
+        _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
+        import base64
+        self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
+
+    def _create_dynamic_form_from_parsed_files(self):
+        """
+        TODO 解析下载的process json文件，写到Dynamic Form
+        """
+        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
+        # Name->Screen Name,ID->Screen ID
+        if self.export_data and isinstance(self.export_data, str):
+            _data_dict = json.loads(self.export_data)
+            _logger.warning(_data_dict)
+            _screen_list = _data_dict.get('screens')
+            for _screen in _screen_list:
+                _screen_record = self.env['syd_bpm.dynamic_form'].search([('pm_screen_id','=',_screen.get('id')),('name','=',_screen.get('config')[0].get('name'))])
+                if not _screen_record:
+                    _val = {
+                        'pm_screen_id': _screen.get('id'),
+                        'name': _screen.get('config')[0].get('name'),
+                        'process_id':self.id,
+                        'pm_screen_label': _screen.get('title'),
+                        'pm_screen_type':_screen.get('type')
+                    }
+                    _screen_id = self.env['syd_bpm.dynamic_form'].create(_val)
+
+    def button_get_process_export_json(self):
+        self._get_process_export_json()
+
+    def button_parse_process_json(self):
+        self._parse_json()
+        self._create_dynamic_form_from_parsed_files()
+    
+    @api.model
+    def action_create_new_request(self,related_id=False,related_model=False):
+        """
+        For the external action 'Create Request' menu
+        """
+        _process_record = self.env['syd_bpm.process'].search([('pm_callable_id','=',related_model)],limit=1)
+        if _process_record and _process_record.process_group_id:
+            _process_record.process_group_id.start_process(process_id=_process_record,related_model=related_model,related_id=related_id)
+            return True 
+        return False
+
+
 class Activity(models.Model):
     _inherit = 'syd_bpm.activity'
     
@@ -538,7 +584,6 @@ class Activity(models.Model):
     def start_activity(self):
         pass
 
-    
     
 class Case(models.Model):
     _inherit = 'syd_bpm.case'
@@ -562,6 +607,7 @@ class Case(models.Model):
         """
         /tasks/{task_id} Update a task
         """
+        # TODO 通过process_id找到对应Process的Dynamic Form, 在Dynamic Form找到同名的Case并获取所需的字段
         _data = {
             "status": "COMPLETED",
             "data": {
@@ -617,11 +663,3 @@ class TaskExecuted(models.Model):
         res = super(TaskExecuted,self)._val_note(user_id)                                          
         res['pm_del_index'] = self.pm_del_index
         return res
-    
-   
-    
-    
-
-    
-
-    

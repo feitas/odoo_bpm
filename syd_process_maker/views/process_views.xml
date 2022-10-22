@@ -6,13 +6,16 @@
             <field name="inherit_id" ref="syd_bpm.process_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//header" position="inside">
-                    <button name="test_create_new_process" class="oe_highlight" type="object" string="Sync Process"></button>
+                    <button name="button_get_process_export_json" class="oe_highlight" type="object" string="Get Export Json" attrs="{'invisible':[('export_data_url','!=',False)]}"></button>
+                    <button name="button_parse_process_json" class="oe_highlight" type="object" string="Parse Json" attrs="{'invisible':[('export_data_url','=',False)]}"></button>
                 </xpath>
                 <field name="process_group_id" position="after">
                     <field name="pm_process_id"/>
+                    <field name="pm_callable_id"/>
                 </field>
                 <field name="start_events" position="after">
-                    <field name="export_data_url"/>
+                    <field name="export_data_url" widget="url"/>
+                    <field name="export_data" invisible="1"/>
                 </field>
             </field>
         </record>

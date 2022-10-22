@@ -42,16 +42,22 @@ class DynamicForm(models.Model):
     _name = 'syd_bpm.dynamic_form'
     _description='Dynamic Form'
     
-    
     name = fields.Char('Name',required=True)
     note = fields.Text('Note',required=True)
     process_id = fields.Many2one('syd_bpm.process',string='Process', required=True)
     pm_activity_ids = fields.One2many('syd_bpm.activity','dynamic_form_id')
     dynamic_form_line_ids = fields.One2many('syd_bpm.dynamic_form_line','dynamic_form_id')
     dynamic_wizard_id = fields.Many2one('syd_dynamic_wizard.wizard.config')
+    # TODO　添加字段Element Name
     state = fields.Selection([('draft','Draft'),('done','Done')],default='draft',string='State')
     
-    
+    # For Process Maker
+    dynamic_form_items = fields.One2many('syd_bpm.dynamic_form_item','dynamic_form_id')
+    pm_screen_id = fields.Char('PM Screen Id')
+    pm_screen_name = fields.Char('PM Screen Name')
+    pm_screen_label = fields.Char('PM Screen Label')
+    pm_screen_type = fields.Char('PM Screen Type')
+
     def create_dynamic_wizard(self):
         """ 
             Create the dynamic wizard
@@ -136,3 +142,13 @@ class DynamicForm(models.Model):
             self.sudo().dynamic_wizard_id.unlink()
             self.state = 'draft'   
         return ibdf
+
+
+class DynamicFormItems(models.Model):
+    _name = 'syd_bpm.dynamic_form_item'
+    _description='Dynamic Form Item'
+
+    dynamic_form_id = fields.Many2one('syd_bpm.dynamic_form', string='Dynamic Form')
+    pm_screen_item_name = fields.Char('PM Screen Item Name')
+    pm_screen_item_label = fields.Char('PM Screen Item Label')
+    pm_screen_type = fields.Char('PM Screen Type')
