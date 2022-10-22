@@ -11,8 +11,8 @@
 
       <menuitem name="Processes" parent="syd_bpm_menu_root" id="syd_bpm_menu_processes" sequence="2"/>
       <menuitem name="Processes" parent="syd_bpm_menu_processes" id="syd_bpm_sub_menu_processes" sequence="1" action="process_act"/>
-      <menuitem name="Cases" parent="syd_bpm_menu_processes" id="syd_bpm_menu_cases" sequence="3" action="open_view_case"/>
-      <menuitem name="Activity" parent="syd_bpm_menu_processes" id="syd_bpm_menu_activity_variables" sequence="2" action="activity_act"/>
+      <menuitem name="Task" parent="syd_bpm_menu_processes" id="syd_bpm_menu_cases" sequence="3" action="open_view_case"/>
+      <menuitem name="Request" parent="syd_bpm_menu_processes" id="syd_bpm_menu_activity_variables" sequence="2" action="activity_act"/>
 
       <menuitem name="Triggers" parent="syd_bpm_menu_root" id="syd_bpm_menu_triggers" sequence="3"/>
       <menuitem name="Process" parent="syd_bpm_menu_triggers" id="syd_bpm_menu_process_triggers" sequence="1" action="process_trigger_act"/>
