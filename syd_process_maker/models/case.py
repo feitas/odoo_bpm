@@ -9,6 +9,8 @@ from odoo import models, fields, api
 from odoo.tools.translate import _
 from odoo.exceptions import ValidationError,UserError
 
+from .process import TimeConverterDate
+
 _logger = logging.getLogger(__name__)
 
 
@@ -33,7 +35,7 @@ class Case(models.Model):
         case =  super(Case, self).create(vals)
         _vals = {
             "res_name": "",
-            "date_deadline": "2022-10-23",
+            "date_deadline": case.date_deadline,
             "activity_type_id": self.env['ir.model.data']._xmlid_to_res_id('mail.mail_activity_data_todo', raise_if_not_found=False),
             "user_id": case.pm_assigned_to.id,
             "summary": "",
@@ -86,6 +88,7 @@ class Case(models.Model):
                                 'related_model':self.related_model,
                                 'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
                                 'state':_state,
+                                'date_deadline': TimeConverterDate(item.get("due_at")),
                             }
                             self.env['syd_bpm.case'].create(_val)
                 else:

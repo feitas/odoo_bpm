@@ -573,6 +573,7 @@
               <group>
                 <field name="name" />
                 <field name="process_id" />
+                <field name="date_deadline" />
               </group>
               <group>
                 <field name="date_task_start"/>

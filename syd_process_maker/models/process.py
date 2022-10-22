@@ -17,6 +17,22 @@ from odoo.exceptions import ValidationError,UserError
 
 _logger = logging.getLogger(__name__)
 
+
+def TimeConverterTime(pm):
+    res = ""
+    if "+" in pm and "T" in pm:
+        t = pm.split("+")[0]
+        res = t.replace("T" , " ")
+    return res
+
+def TimeConverterDate(pm):
+    res = ""
+    if "+" in pm and "T" in pm:
+        t = pm.split("+")[0]
+        res = t.split("T")[0]
+    return res
+
+
 class ProcessGroup(BPMInterface,models.Model):
     _inherit = 'syd_bpm.process_group'
     
@@ -299,14 +315,15 @@ class ProcessGroup(BPMInterface,models.Model):
                         'pm_case_id': item.get('id'),
                         'name': item.get('element_name'),
                         'process_id': process_id.id,
-                        'activity_id':request_id.id,
-                        'related_model':related_model,
-                        'pm_assigned_to':user_id.id if user_id else False,
-                        'related_id':int(related_id) if isinstance(related_id, int) else str(related_id),
-                        'state':_state,
-                        'pm_element_id':item.get('element_id'),
-                        'pm_element_type':item.get('element_type'),
-                        'pm_element_name':item.get('element_name'),
+                        'activity_id': request_id.id,
+                        'related_model': related_model,
+                        'pm_assigned_to': user_id.id if user_id else False,
+                        'related_id': int(related_id) if isinstance(related_id, int) else str(related_id),
+                        'state': _state,
+                        'pm_element_id': item.get('element_id'),
+                        'pm_element_type': item.get('element_type'),
+                        'pm_element_name': item.get('element_name'),
+                        'date_deadline': TimeConverterDate(item.get("due_at")),
                     }
                     self.env['syd_bpm.case'].create(_val)
         else:
