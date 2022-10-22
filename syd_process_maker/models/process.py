@@ -325,6 +325,9 @@ class ProcessGroup(BPMInterface,models.Model):
                         'pm_element_name': item.get('element_name'),
                         'date_deadline': TimeConverterDate(item.get("due_at")),
                     }
+                    _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
+                    if _user:
+                        _val.update({'pm_assigned_to': _user.id})
                     self.env['syd_bpm.case'].create(_val)
         else:
             _logger.error(pm_tasks)
@@ -455,7 +458,8 @@ class ProcessGroup(BPMInterface,models.Model):
                     _email = odoo_user.email if odoo_user.email else ''.join((odoo_user.name,'@noway.com'))
                     par = {'username':odoo_user.name,'email':_email,'status':'ACTIVE','firstname':'email','lastname':'email','password':'88888888'}
                     res = self._call(f'users', jsonobject=par, method='POST')
-                    _logger.warning(f'res:{res}')
+                    # FIXME: 如果pm有删除的用户，也是不可以创建的，会报错：A user with the username Administrator and email admin@example.com was previously deleted.
+                    odoo_user.write({'pm_user_id': res['id']})
             pgroup.last_update = fields.Datetime.now()
 
             return True

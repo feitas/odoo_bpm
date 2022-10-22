@@ -90,6 +90,9 @@ class Case(models.Model):
                                 'state':_state,
                                 'date_deadline': TimeConverterDate(item.get("due_at")),
                             }
+                            _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
+                            if _user:
+                                _val.update({'pm_assigned_to': _user.id})
                             self.env['syd_bpm.case'].create(_val)
                 else:
                     _logger.warning(pm_tasks)
