@@ -235,7 +235,7 @@ class ProcessGroup(BPMInterface,models.Model):
         res = self._call('cases/%s/cancel'%(case_id.pm_case_id),method='PUT')
         return res
     
-    def start_process(self, process_id, activity_id,related_model=False,related_id=False):
+    def start_process(self, process_id,related_model=False,related_id=False):
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
@@ -265,7 +265,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 'pm_activity_id': res.get('id'),
                 'status': res.get('status'),
                 'related_model':related_model if related_model else '',
-                'related_id':related_id if related_id and isinstance(related_id, str) else False
+                'related_id':related_id if related_id and isinstance(related_id, (int,str)) else False
             }
             request_id = self.env['syd_bpm.activity'].create(_val)
         else:
@@ -275,8 +275,6 @@ class ProcessGroup(BPMInterface,models.Model):
             request_id.pm_activity_id = res.get('id')
             request_id.pm_user = int(res.get('user_id'))
             request_id.pm_callable_id = res.get('callable_id')
-        if related_record:
-            related_record.sudo().write({'pm_activity_id':int(request_id.id)})
         # get tasks by process_request_id
         params = {
             'process_request_id': request_id.pm_activity_id
@@ -332,11 +330,12 @@ class ProcessGroup(BPMInterface,models.Model):
                     if process['process_category_id'] != '':
                         pm_category = self._get_category_info(int(process['process_category_id']))['name']
                     if not process_id:
+                        _pm_callable_id = process.get('start_events')[0].get('ownerProcessId') if process.get('start_events') and len(process.get('start_events'))>0 else False
                         process_id = self.env['syd_bpm.process'].create(
                                                            {'name':process['name'],
                                                             'description':process['description'],
                                                             'pm_process_id':process['id'],
-                                                            'pm_callable_id':process.get('start_events')[0].get('ownerProcessId'),
+                                                            'pm_callable_id':_pm_callable_id,
                                                             'process_group_id':pgroup.id,
                                                             'category_id':self.env['syd_bpm.process_category'].get_or_create_category(pm_category)
                                                             }
@@ -515,14 +514,6 @@ class Process(models.Model):
     export_data_url = fields.Char(string='Process Export URL')
     export_data = fields.Char(string='Process Export')
     
-    def _parse_json(self):
-        """
-        TODO 解析下载的process json文件，写到Dynamic Form
-        """
-        # 1.找到扩展名为该process名称+'.json'的文件，用base64进行解码
-        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
-        pass
-
     def _get_process_export_json(self):
         """
         Get process export url form the api 'processes/{process_id}/export', method='POST
@@ -567,12 +558,19 @@ class Process(models.Model):
     def button_parse_process_json(self):
         self._parse_json()
         self._create_dynamic_form_from_parsed_files()
+    
+    @api.model
+    def action_create_new_request(self,related_id=False,related_model=False):
+        """
+        For the external action 'Create Request' menu
+        """
+        _process_record = self.env['syd_bpm.process'].search([('pm_callable_id','=',related_model)],limit=1)
+        if _process_record and _process_record.process_group_id:
+            _process_record.process_group_id.start_process(process_id=_process_record,related_model=related_model,related_id=related_id)
+            return True 
+        return False
 
-    def button_create_new_request(self):
-        if self.pm_process_id:
-            self.process_group_id.start_process(self, None)
 
-   
 class Activity(models.Model):
     _inherit = 'syd_bpm.activity'
     
