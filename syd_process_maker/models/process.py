@@ -527,6 +527,8 @@ class Process(models.Model):
         Parse the downloaded process json file
         """
         _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
+        if not _json_record:
+            raise UserError("请通过导出地址跳转到ProcessMaker中下载json文件，并上传到当前记录的附件中。")
         import base64
         self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
 
@@ -565,6 +567,9 @@ class Process(models.Model):
         For the external action 'Create Request' menu
         """
         _process_record = self.env['syd_bpm.process'].search([('pm_callable_id','=',related_model)],limit=1)
+        if not _process_record:
+            return {"error": True, "message": "Can not find process for %s ..." % related_model}
+
         if _process_record and _process_record.process_group_id:
             _process_record.process_group_id.start_process(process_id=_process_record,related_model=related_model,related_id=related_id)
             return True 

@@ -17,10 +17,14 @@ odoo.define('syd_process_maker.BasicModel', function (require) {
                 method: 'action_create_new_request',
                 args: [record.data.id, record.model],
                 context: context,
-            }).then(function () {
-                location.reload();
+            }).then(function (res) {
+                if (res.error) {
+                    alert(res["message"]);
+                } else {
+                    location.reload();
+                }
             }).catch(function () {
-                throw Error("Can not find the process");
+                throw Error("Ops, something wrong.....");
             });;
         },
     });
