@@ -17,6 +17,22 @@ from odoo.exceptions import ValidationError,UserError
 
 _logger = logging.getLogger(__name__)
 
+
+def TimeConverterTime(pm):
+    res = ""
+    if "+" in pm and "T" in pm:
+        t = pm.split("+")[0]
+        res = t.replace("T" , " ")
+    return res
+
+def TimeConverterDate(pm):
+    res = ""
+    if "+" in pm and "T" in pm:
+        t = pm.split("+")[0]
+        res = t.split("T")[0]
+    return res
+
+
 class ProcessGroup(BPMInterface,models.Model):
     _inherit = 'syd_bpm.process_group'
     
@@ -299,15 +315,19 @@ class ProcessGroup(BPMInterface,models.Model):
                         'pm_case_id': item.get('id'),
                         'name': item.get('element_name'),
                         'process_id': process_id.id,
-                        'activity_id':request_id.id,
-                        'related_model':related_model,
-                        'pm_assigned_to':user_id.id if user_id else False,
-                        'related_id':int(related_id) if isinstance(related_id, int) else str(related_id),
-                        'state':_state,
-                        'pm_element_id':item.get('element_id'),
-                        'pm_element_type':item.get('element_type'),
-                        'pm_element_name':item.get('element_name'),
+                        'activity_id': request_id.id,
+                        'related_model': related_model,
+                        'pm_assigned_to': user_id.id if user_id else False,
+                        'related_id': int(related_id) if isinstance(related_id, int) else str(related_id),
+                        'state': _state,
+                        'pm_element_id': item.get('element_id'),
+                        'pm_element_type': item.get('element_type'),
+                        'pm_element_name': item.get('element_name'),
+                        'date_deadline': TimeConverterDate(item.get("due_at")),
                     }
+                    _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
+                    if _user:
+                        _val.update({'pm_assigned_to': _user.id})
                     self.env['syd_bpm.case'].create(_val)
         else:
             _logger.error(pm_tasks)
@@ -438,7 +458,8 @@ class ProcessGroup(BPMInterface,models.Model):
                     _email = odoo_user.email if odoo_user.email else ''.join((odoo_user.name,'@noway.com'))
                     par = {'username':odoo_user.name,'email':_email,'status':'ACTIVE','firstname':'email','lastname':'email','password':'88888888'}
                     res = self._call(f'users', jsonobject=par, method='POST')
-                    _logger.warning(f'res:{res}')
+                    # FIXME: 如果pm有删除的用户，也是不可以创建的，会报错：A user with the username Administrator and email admin@example.com was previously deleted.
+                    odoo_user.write({'pm_user_id': res['id']})
             pgroup.last_update = fields.Datetime.now()
 
             return True
@@ -527,6 +548,8 @@ class Process(models.Model):
         Parse the downloaded process json file
         """
         _json_record = self.env['ir.attachment'].search([('name','=',f'{self.name}.json'),('res_model','=',self._name),('res_id','=',self.id)])
+        if not _json_record:
+            raise UserError("请通过导出地址跳转到ProcessMaker中下载json文件，并上传到当前记录的附件中。")
         import base64
         self.export_data = base64.b64decode(_json_record.datas).decode('utf-8').encode().decode('utf-8')
 
@@ -565,6 +588,9 @@ class Process(models.Model):
         For the external action 'Create Request' menu
         """
         _process_record = self.env['syd_bpm.process'].search([('pm_callable_id','=',related_model)],limit=1)
+        if not _process_record:
+            return {"error": True, "message": "Can not find process for %s ..." % related_model}
+
         if _process_record and _process_record.process_group_id:
             _process_record.process_group_id.start_process(process_id=_process_record,related_model=related_model,related_id=related_id)
             return True 
@@ -585,69 +611,7 @@ class Activity(models.Model):
         pass
 
     
-class Case(models.Model):
-    _inherit = 'syd_bpm.case'
-    
-    pm_assigned_to = fields.Many2one('res.users',string="Assigned To")
-    pm_case_id = fields.Char(string='Process Maker Task ID', required=False)
-    activity_id = fields.Many2one('syd_bpm.activity',string="Activity")
-    pm_element_id = fields.Char(string='Process Maker Element ID')
-    pm_element_type = fields.Char(string='Process Maker Element Type')
-    pm_element_name = fields.Char(string='Process Maker Element Name')
-    related_model = fields.Char(string='Related Model')
-    related_id = fields.Char(string='Related Record ID')
-    is_assigned_to = fields.Boolean(string='Is Assigned To',compute='_compute_is_assigned_to')
 
-    def _compute_is_assigned_to(self):
-        for record in self:
-            record.is_assigned_to = bool(record.pm_assigned_to.id == self.env.uid)
-        
-
-    def confirm_case(self):
-        """
-        /tasks/{task_id} Update a task
-        """
-        # TODO 通过process_id找到对应Process的Dynamic Form, 在Dynamic Form找到同名的Case并获取所需的字段
-        _data = {
-            "status": "COMPLETED",
-            "data": {
-                "form_input_1": "test"
-            }
-        }
-        if self.process_id:
-            res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
-            if res:
-                if res.get('status') and res.get('status')=='CLOSED':
-                    self.state='completed'
-                params = {
-                    'process_request_id': int(self.process_id.pm_process_id)
-                }
-                pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
-                if pm_tasks.get('data'):
-                    for item in pm_tasks.get('data'):
-                        _domain = [
-                            ('pm_case_id', '=', item.get('id')),
-                        ]
-                        task = self.env['syd_bpm.case'].search(_domain)
-                        if not task:
-                            _state='in_progress'
-                            if item.get('status') and item.get('status')=='CLOSED':
-                                _state = 'cancelled'
-                            elif item.get('status') and item.get('status')=='COMPLETED':
-                                _state = 'completed'
-                            _val = {
-                                'pm_case_id': item.get('id'),
-                                'name': item.get('element_name'),
-                                'process_id': self.process_id.id,
-                                'related_model':self.related_model,
-                                'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
-                                'state':_state,
-                            }
-                            self.env['syd_bpm.case'].create(_val)
-                else:
-                    _logger.warning(pm_tasks)
-            return True
-   
 
 class TaskExecuted(models.Model):
     _inherit = 'syd_bpm.task_executed'
