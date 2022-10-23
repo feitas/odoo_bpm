@@ -28,8 +28,10 @@
 
     # always loaded
     'data': [
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/process_views.xml',
+        'views/dynamice_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
