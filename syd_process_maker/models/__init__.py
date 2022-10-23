@@ -3,4 +3,4 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 
-from . import process,note,process_object,process_role
+from . import process,note,process_object,process_role,dynamic_form_item
