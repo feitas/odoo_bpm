@@ -672,16 +672,11 @@
                   </tree>
                 </field>
               </page>
-              <page string="Items">
-                <field name="dynamic_form_items">
-                </field>
-              </page>
             </notebook>
           </sheet>
         </form>
       </field>
     </record>
-
 
     <record id="view_dynamic_form_filter" model="ir.ui.view">
       <field name="name">dynamic_form.select</field>

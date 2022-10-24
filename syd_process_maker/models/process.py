@@ -571,9 +571,26 @@ class Process(models.Model):
                         'name': _screen.get('config')[0].get('name'),
                         'process_id':self.id,
                         'pm_screen_label': _screen.get('title'),
-                        'pm_screen_type':_screen.get('type')
+                        'pm_screen_type':_screen.get('type'),
+                        'note': _screen.get('title')
                     }
-                    _screen_id = self.env['syd_bpm.dynamic_form'].create(_val)
+                    _screen_record = self.env['syd_bpm.dynamic_form'].create(_val)
+                    _item_list = _screen.get('config')[0].get('items')
+                    _item_val = []
+                    for _item in _item_list:
+                        _item_val.append((0, 0, {
+                            'name':_item.get('config').get('name'),
+                            'dynamic_form_id':_screen_record.id,
+                            'pm_screen_item_name':_item.get('config').get('name'),
+                            'pm_screen_item_label':_item.get('config').get('label'),
+                            'pm_screen_item_type':_item.get('config').get('type')
+                        }))
+                    _screen_record.write({'dynamic_form_items':_item_val})
+                else:
+                    _screen_record.name = _screen.get('config')[0].get('name')
+                    _screen_record.pm_screen_label = _screen.get('title')
+                    _screen_record.pm_screen_type = _screen.get('type')
+
 
     def button_get_process_export_json(self):
         self._get_process_export_json()
