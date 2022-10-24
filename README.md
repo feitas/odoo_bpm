@@ -6,6 +6,11 @@ B.P.M. 将 <a href="http://www.odoo.com">Odoo</a> (15) 与 <a href="https://www.
 
 Odoo16即将发布，届时将会创建16.0分支，欢迎大家贡献代码。
 
+贡献：
+
+[<a href="https://github.com/feitas">乐川</a>] | [<a href="https://github.com/granzonchen">银枫</a>]
+
+
 
 # 如何开发
 
