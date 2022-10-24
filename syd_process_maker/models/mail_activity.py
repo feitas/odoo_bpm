@@ -58,7 +58,7 @@ class MailActivityExt(models.Model):
                 vals = activity.with_context(activity_previous_deadline=activity.date_deadline)._prepare_next_activity_values()
                 next_activities_values.append(vals)
             
-            if activity.is_bpm:
+            if activity.activity_type_id.is_bpm:
                 pm_case = self.env['syd_bpm.case'].search([('odoo_activity_id', '=', activity.id)])
                 if not pm_case:
                     raise UserError("找不到相应的工作流任务！")

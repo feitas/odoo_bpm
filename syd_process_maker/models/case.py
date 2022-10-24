@@ -47,6 +47,7 @@ class Case(models.Model):
             _vals.update({"res_name": case.activity_id.name.split('-')[1]})
         
         activity = self.env['mail.activity'].create(_vals)
+        print(activity)
         case.write({'odoo_activity_id': activity.id})
         return case
 
@@ -71,11 +72,12 @@ class Case(models.Model):
                 if res.get('status') and res.get('status')=='CLOSED':
                     self.state='completed'
                 params = {
-                    'process_request_id': int(self.process_id.pm_process_id)
+                    'process_request_id': int(self.activity_id.pm_activity_id)
                 }
                 pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
                 if pm_tasks.get('data'):
                     for item in pm_tasks.get('data'):
+                        print(item)
                         _domain = [
                             ('pm_case_id', '=', item.get('id')),
                         ]
@@ -89,6 +91,7 @@ class Case(models.Model):
                             _val = {
                                 'pm_case_id': item.get('id'),
                                 'name': item.get('element_name'),
+                                'activity_id': self.activity_id.id,
                                 'process_id': self.process_id.id,
                                 'related_model':self.related_model,
                                 'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
@@ -96,10 +99,15 @@ class Case(models.Model):
                                 'date_deadline': TimeConverterDate(item.get("due_at")),
                             }
                             _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
+
                             if _user:
                                 _val.update({'pm_assigned_to': _user.id})
+                            else:
+                                _val.update({'pm_assigned_to': self.env['res.users'].search([],limit=1).id})
                             self.env['syd_bpm.case'].create(_val)
                 else:
                     _logger.warning(pm_tasks)
+            else:
+                _logger.warning("更细task没有成功...")
             return True
    

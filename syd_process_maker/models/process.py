@@ -252,6 +252,9 @@ class ProcessGroup(BPMInterface,models.Model):
         return res
     
     def start_process(self, process_id,related_model=False,related_id=False):
+        """
+        process_id : syd_bpm.process
+        """
         # POST /cases
         self.ensure_one()
         pm_process_id = process_id.pm_process_id
@@ -259,6 +262,7 @@ class ProcessGroup(BPMInterface,models.Model):
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
         res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
+        # FIXME? 为什么要存储
         process_id.pm_process_id = res.get('process_id')
         _process_dict = res.get('process')
         if _process_dict:
@@ -276,9 +280,9 @@ class ProcessGroup(BPMInterface,models.Model):
                 'pm_user':int(res.get('user_id')) if res.get('user_id') else False,
                 'pm_callable_id':res.get('callable_id'),
                 'type': 'user-case',
-                'process_id': process_id.id,
+                'process_id': process_id.id, #
                 'user_id': res.get('user_id'),
-                'pm_activity_id': res.get('id'),
+                'pm_activity_id': res.get('id'), # 用于找到PM上的流程实例
                 'status': res.get('status'),
                 'related_model':related_model if related_model else '',
                 'related_id':related_id if related_id and isinstance(related_id, (int,str)) else False
