@@ -28,8 +28,10 @@
 
     # always loaded
     'data': [
+        'datas/datas.xml',
         'views/views.xml',
         'views/process_views.xml',
+        'views/mail_activity_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

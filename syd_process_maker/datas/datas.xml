@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="mail.activity.type" id="mail_activity_type_process">
+        <field name="name">BPM</field>
+    </record>
+</odoo>

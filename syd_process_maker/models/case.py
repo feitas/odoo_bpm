@@ -26,6 +26,7 @@ class Case(models.Model):
     related_model = fields.Char(string='Related Model')
     related_id = fields.Char(string='Related Record ID')
     is_assigned_to = fields.Boolean(string='Is Assigned To',compute='_compute_is_assigned_to')
+    odoo_activity_id = fields.Many2one("mail.activity", string="Mail Activity")
 
     def _compute_is_assigned_to(self):
         for record in self:
@@ -45,7 +46,8 @@ class Case(models.Model):
         if case.activity_id and "-" in case.activity_id.name:
             _vals.update({"res_name": case.activity_id.name.split('-')[1]})
         
-        self.env['mail.activity'].create(_vals)
+        activity = self.env['mail.activity'].create(_vals)
+        case.write({'odoo_activity_id': activity.id})
         return case
 
 
