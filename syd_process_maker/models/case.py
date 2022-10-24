@@ -51,15 +51,18 @@ class Case(models.Model):
         return case
 
 
-    def confirm_case(self):
+    def confirm_case(self, result="pass"):
         """
         /tasks/{task_id} Update a task
         """
         # TODO 通过process_id找到对应Process的Dynamic Form, 在Dynamic Form找到同名的Case并获取所需的字段
+        if result not in ['pass', 'refuse']:
+            raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
+            
         _data = {
             "status": "COMPLETED",
             "data": {
-                "form_input_1": "test"
+                "result": result
             }
         }
         if self.process_id:

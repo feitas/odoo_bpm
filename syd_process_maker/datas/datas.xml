@@ -2,5 +2,6 @@
 <odoo>
     <record model="mail.activity.type" id="mail_activity_type_process">
         <field name="name">BPM</field>
+        <field name="is_bpm">True</field>
     </record>
 </odoo>

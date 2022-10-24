@@ -5,6 +5,7 @@
 import logging
 
 from collections import defaultdict
+from pdb import pm
 
 from odoo import api, exceptions, fields, models, _, Command
 from odoo.tools.translate import _
@@ -17,7 +18,7 @@ _logger = logging.getLogger(__name__)
 class MailActivityExt(models.Model):
     _inherit = 'mail.activity.type'
 
-    is_bpm = fields.Boolean(string="用于工作流")
+    is_bpm = fields.Boolean(string="For pm process")
 
 
 
@@ -59,10 +60,10 @@ class MailActivityExt(models.Model):
             
             if activity.is_bpm:
                 pm_case = self.env['syd_bpm.case'].search([('odoo_activity_id', '=', activity.id)])
-                if activity.bpm_action == 'pass':
-                    pass
-                else:
-                    pass
+                if not pm_case:
+                    raise UserError("找不到相应的工作流任务！")
+                    
+                pm_case.confirm_case(result=activity.bpm_action)
 
             # post message on activity, before deleting it
             record = self.env[activity.res_model].browse(activity.res_id)

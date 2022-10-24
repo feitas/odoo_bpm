@@ -6,19 +6,19 @@
             <field name="inherit_id" ref="mail.mail_activity_view_form_popup"/>
             <field name="arch" type="xml">
                 <field name="activity_type_id" position="after">
-                    <field name="bpm_action" attrs="{'invisible': [('activity_type_id.name', '!=', 'BPM')]}"/>
-                </xpath>
+                    <field name="bpm_action" attrs="{'invisible': [('activity_type_id', '!=', 'BPM')]}"/>
+                </field>
             </field>
         </record>
 
         <record model="ir.ui.view" id="view_mail_activity_type_ext">
             <field name="name">mail.activity.type.inherit</field>
-            <field name="model">mail.activity</field>
+            <field name="model">mail.activity.type</field>
             <field name="inherit_id" ref="mail.mail_activity_type_view_form"/>
             <field name="arch" type="xml">
                 <field name="category" position="before">
                     <field name="is_bpm" />
-                </xpath>
+                </field>
             </field>
         </record>
 

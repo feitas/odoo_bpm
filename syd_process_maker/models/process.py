@@ -455,11 +455,14 @@ class ProcessGroup(BPMInterface,models.Model):
             upgrade_val = []
             for odoo_user in odoo_user_list:
                 if odoo_user.name not in pm_user_name_list:
-                    _email = odoo_user.email if odoo_user.email else ''.join((odoo_user.name,'@noway.com'))
-                    par = {'username':odoo_user.name,'email':_email,'status':'ACTIVE','firstname':'email','lastname':'email','password':'88888888'}
-                    res = self._call(f'users', jsonobject=par, method='POST')
-                    # FIXME: 如果pm有删除的用户，也是不可以创建的，会报错：A user with the username Administrator and email admin@example.com was previously deleted.
-                    odoo_user.write({'pm_user_id': res['id']})
+                    try:
+                        _email = odoo_user.email if odoo_user.email else ''.join((odoo_user.name,'@noway.com'))
+                        par = {'username':odoo_user.name,'email':_email,'status':'ACTIVE','firstname':'email','lastname':'email','password':'88888888'}
+                        res = self._call(f'users', jsonobject=par, method='POST')
+                        # FIXME: 如果pm有删除的用户，也是不可以创建的，会报错：A user with the username Administrator and email admin@example.com was previously deleted.
+                        odoo_user.write({'pm_user_id': res['id']})
+                    except Exception as e:
+                        _logger.error(e)
             pgroup.last_update = fields.Datetime.now()
 
             return True
