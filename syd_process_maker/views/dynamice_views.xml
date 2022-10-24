@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="syd_bpm_dynamic_form_inherit">
+            <field name="name">syd_bpm.dynamic_form.ext</field>
+            <field name="model">syd_bpm.dynamic_form</field>
+            <field name="inherit_id" ref="syd_bpm.dynamic_form_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page/field[@name='dynamic_form_line_ids']/.." position="after">
+                    <page string="Items">
+                        <field name="dynamic_form_items">
+                            <tree string="Process Date Calculated">
+                                <field name="pm_screen_item_name"/>
+                                <field name="pm_screen_item_label"/>
+                                <field name="pm_screen_item_type" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
