@@ -139,15 +139,7 @@
                 <field name="map"/>
               </page>
               <page string="Dynamic form">
-                <field name="dynamic_form_ids">
-                  <tree string="Screens" editable="bottom">
-                    <field name="name"/>
-                    <field name="process_id"/>
-                    <field name="pm_screen_id"/>
-                    <field name="pm_screen_label"/>
-                    <field name="pm_screen_type"/>
-                  </tree>
-                </field>
+                <field name="dynamic_form_ids"/>
               </page>
               <page string="Process Roles">
                 <field name="process_role_ids"/>
