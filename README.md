@@ -1,10 +1,12 @@
 # ODOO链接ProcessMaker
 
-B.P.M. 将 <a href="http://www.odoo.com">Odoo</a> (15) 与 <a href="https://www.processmaker.com/">ProcessMaker</a> (4)进行了对接。
+B.P.M. 将 <a href="http://www.odoo.com">Odoo</a> 与 <a href="https://www.processmaker.com/">ProcessMaker</a> (4)进行了对接。
 
-[<a href="docs/README-OLD.md">基于</a>]
+[<a href="docs/README-OLD.md">之前项目的Readme</a>]
 
-Odoo16即将发布，届时将会创建16.0分支，欢迎大家贡献代码。
+Odoo版本： 当前版本15，接下来是14、16
+
+开发计划，见Issues。
 
 贡献：
 
