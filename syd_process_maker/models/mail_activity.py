@@ -93,6 +93,34 @@ class MailActivityExt(models.Model):
             messages |= activity_message
 
         next_activities = self.env['mail.activity'].create(next_activities_values)
-        self.unlink()  # will unlink activity, dont access `self` after that
+        self.with_context({'type': 'direct'}).unlink()  # will unlink activity, dont access `self` after that
 
         return messages, next_activities
+
+    def unlink(self):
+        """
+        for bpm activity type, we will send result to pm , then unlink.
+        """
+        if self._context.get('type') != 'direct':
+            for activity in self:
+                if activity.activity_type_id.is_bpm:
+                    pm_case = self.env['syd_bpm.case'].search([('odoo_activity_id', '=', activity.id)])
+                    if not pm_case:
+                        raise UserError("找不到相应的工作流任务！")
+                    
+                    pm_case.confirm_case(result='refuse')
+                
+                    # post message on activity, before deleting it
+                    record = self.env[activity.res_model].browse(activity.res_id)
+                    record.message_post_with_view(
+                        'mail.message_activity_done',
+                        values={
+                            'activity': activity,
+                            'feedback': False,
+                            'display_assignee': activity.user_id != self.env.user
+                        },
+                        subtype_id=self.env['ir.model.data']._xmlid_to_res_id('mail.mt_activities'),
+                        mail_activity_type_id=activity.activity_type_id.id,
+                    )
+
+        super(MailActivityExt, self).unlink()
