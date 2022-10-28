@@ -6,9 +6,9 @@ B.P.M. 将 <a href="http://www.odoo.com">Odoo</a> 与 <a href="https://www.proce
 
 Odoo版本： 当前版本15，接下来是14、16
 
-[<a href="https://baijiahao.baidu.com/builder/preview/s?id=1747820665361723046">使用说明文字版</a>]
+[<a target='_blank' href="https://baijiahao.baidu.com/builder/preview/s?id=1747820665361723046">使用说明文字版</a>]
 
-[<a href="https://www.bilibili.com/video/BV1tW4y1j7Xa/?spm_id_from=333.999.0.0&vd_source=5d5575c128394d478b50c2ecfa9a5df4">使用说明视频版</a>]
+[<a target='_blank' href="https://www.bilibili.com/video/BV1tW4y1j7Xa/?spm_id_from=333.999.0.0&vd_source=5d5575c128394d478b50c2ecfa9a5df4">使用说明视频版</a>]
 
 开发计划，见Issues。
 
