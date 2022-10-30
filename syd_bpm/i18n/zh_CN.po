@@ -39,7 +39,7 @@ msgstr "后置操作"
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "活动"
 
 #. module: syd_bpm
 #: model:ir.actions.act_window,name:syd_bpm.activity_act
@@ -55,18 +55,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
 #: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
 msgid "Activity"
-msgstr ""
+msgstr "活动"
 
 #. module: syd_bpm
 #: model:ir.actions.act_window,name:syd_bpm.activity_trigger_act
 msgid "Activity Trigger"
-msgstr ""
+msgstr "活动触发器"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_res_config_settings__activity_type_id
 #: model_terms:ir.ui.view,arch_db:syd_bpm.res_config_settings_view_link_external_form
 msgid "Activity Type"
-msgstr ""
+msgstr "活动类型"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.res_config_settings_view_link_external_form
@@ -85,7 +85,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_attachment_count
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "附件数量"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__activity_ids
@@ -95,14 +95,14 @@ msgstr ""
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__attachment_type
 msgid "Attachment type"
-msgstr ""
+msgstr "附件类型"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_note_note__attachment_ids
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__attachment_ids
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__attachment_ids
 msgid "Attachments"
-msgstr ""
+msgstr "附件"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__automated
@@ -114,7 +114,7 @@ msgstr ""
 #. module: syd_bpm
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_root
 msgid "B.P.M."
-msgstr ""
+msgstr "工作流"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_base_automation__activity_id
@@ -249,7 +249,7 @@ msgstr ""
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_cases
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
 msgid "Cases"
-msgstr ""
+msgstr "任务"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__char
@@ -339,7 +339,7 @@ msgstr ""
 #. module: syd_bpm
 #: model:ir.ui.menu,name:syd_bpm.date_calculated
 msgid "Date Calculated"
-msgstr ""
+msgstr "计算日期"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__date_calculated
@@ -484,7 +484,7 @@ msgstr ""
 #. module: syd_bpm
 #: model:ir.ui.menu,name:syd_bpm.management_dynamic_form
 msgid "Dynamic forms"
-msgstr ""
+msgstr "视图"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_form
@@ -907,7 +907,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
 msgid "Process"
-msgstr ""
+msgstr "流程"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
@@ -985,7 +985,7 @@ msgstr ""
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_objects
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
 msgid "Process Objects"
-msgstr ""
+msgstr "流程对象"
 
 #. module: syd_bpm
 #: model:ir.actions.act_window,name:syd_bpm.process_priority_act
@@ -994,7 +994,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_priority_form_view
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_priority_tree_view
 msgid "Process Priority"
-msgstr ""
+msgstr "流程优先级"
 
 #. module: syd_bpm
 #: model:ir.actions.act_window,name:syd_bpm.process_role_act
@@ -1017,7 +1017,7 @@ msgstr ""
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_process_roles
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
 msgid "Process Roles"
-msgstr ""
+msgstr "流程角色"
 
 #. module: syd_bpm
 #: model:ir.actions.act_window,name:syd_bpm.action_process_start
@@ -1074,22 +1074,22 @@ msgstr "流程"
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_role_activity__type__random
 msgid "Random"
-msgstr ""
+msgstr "随机"
 
 #. module: syd_bpm
 #: model:ir.ui.menu,name:syd_bpm.syd_bpm_menu_reports
 msgid "Reports"
-msgstr ""
+msgstr "报告"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form_line__required
 msgid "Required"
-msgstr ""
+msgstr "必填"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__res_id
 msgid "Res Id"
-msgstr ""
+msgstr "记录ID"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_has_sms_error
@@ -1103,7 +1103,7 @@ msgstr ""
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_todo_search_view
 msgid "Search"
-msgstr ""
+msgstr "搜索"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_activity_filter
@@ -1149,7 +1149,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:syd_bpm.action_bpm_config
 #: model:ir.ui.menu,name:syd_bpm.menu_bpm_config
 msgid "Settings"
-msgstr ""
+msgstr "设置"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__user-fixed
