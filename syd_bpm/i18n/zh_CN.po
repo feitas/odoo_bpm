@@ -27,7 +27,7 @@ msgstr "动作"
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_needaction
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "待办动作"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_base_automation__state
@@ -309,7 +309,7 @@ msgstr "确认"
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__create_uid
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "创建由"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__create_date
@@ -329,12 +329,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__create_date
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__create_date
 msgid "Created on"
-msgstr ""
+msgstr "创建于"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__date
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #. module: syd_bpm
 #: model:ir.ui.menu,name:syd_bpm.date_calculated
@@ -344,25 +344,25 @@ msgstr "计算日期"
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__date_calculated
 msgid "Date Calculated From Start Process"
-msgstr ""
+msgstr "从流程开始计算日期"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__date_deadline
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__date_deadline
 msgid "Date Deadline"
-msgstr ""
+msgstr "截止日期"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__date_task_end
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__date_task_end
 msgid "Date End"
-msgstr ""
+msgstr "结束日期"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__date_task_start
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__date_task_start
 msgid "Date Start"
-msgstr ""
+msgstr "开始日期"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__datetime
@@ -383,18 +383,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_note_note__date_deadline
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__date_deadline
 msgid "Deadline"
-msgstr ""
+msgstr "截止"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__default_attachment
 msgid "Default attachment"
-msgstr ""
+msgstr "默认附件"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__deprecated
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process__deprecated
 msgid "Deprecated"
-msgstr ""
+msgstr "已废弃"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__description
@@ -402,7 +402,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__description
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__description
 msgid "Description"
-msgstr ""
+msgstr "描述"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__display_name
@@ -422,22 +422,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__display_name
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
 msgid "Documents"
-msgstr ""
+msgstr "文档"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_dynamic_form__state__done
 msgid "Done"
-msgstr ""
+msgstr "完成"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_dynamic_form__state__draft
 msgid "Draft"
-msgstr ""
+msgstr "草稿"
 
 #. module: syd_bpm
 #: model:ir.model,name:syd_bpm.model_syd_bpm_dynamic_form
@@ -447,25 +447,25 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
 #: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_tree
 msgid "Dynamic Form"
-msgstr ""
+msgstr "动态表单"
 
 #. module: syd_bpm
 #: model:ir.model,name:syd_bpm.model_syd_bpm_dynamic_form_line
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__dynamic_form_line_ids
 msgid "Dynamic Form Line"
-msgstr ""
+msgstr "动态表单行"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__dynamic_user_id
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_activity__type__dynamic-user
 #: model_terms:ir.ui.view,arch_db:syd_bpm.activity_form_view
 msgid "Dynamic User"
-msgstr ""
+msgstr "动态用户"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_dynamic_form__dynamic_wizard_id
 msgid "Dynamic Wizard"
-msgstr ""
+msgstr "动态向导"
 
 #. module: syd_bpm
 #: model:ir.actions.act_window,name:syd_bpm.dyanmic_form_action
@@ -473,13 +473,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_form
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_form_view
 msgid "Dynamic form"
-msgstr ""
+msgstr "动态表单"
 
 #. module: syd_bpm
 #: code:addons/syd_bpm/models/dynamic_form.py:0
 #, python-format
 msgid "Dynamic form not done!"
-msgstr ""
+msgstr "未完成的动态表单"
 
 #. module: syd_bpm
 #: model:ir.ui.menu,name:syd_bpm.management_dynamic_form
@@ -489,22 +489,22 @@ msgstr "视图"
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.dynamic_form_form
 msgid "Fields"
-msgstr ""
+msgstr "字段"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.tasks_report_filter
 msgid "Filters"
-msgstr ""
+msgstr "过滤器"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_role_activity__type__first-of-role
 msgid "First of Role"
-msgstr ""
+msgstr "第一角色"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__float
 msgid "Float"
-msgstr ""
+msgstr "Float"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_follower_ids
@@ -513,7 +513,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_follower_ids
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "关注者"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_partner_ids
@@ -522,7 +522,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_partner_ids
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "关注者"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_note_note__form_compiled
@@ -545,7 +545,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__has_message
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "有消息"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__html
@@ -570,7 +570,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__id
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_needaction
@@ -584,7 +584,7 @@ msgstr ""
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_needaction
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_unread
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "如果选中，新消息会通知你。"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_has_error
@@ -598,7 +598,7 @@ msgstr ""
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_has_error
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "如果选中，一些消息会有一条发送错误。"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_case__state__in_progress
@@ -622,7 +622,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_is_follower
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "是关注者"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__is_start_activity
@@ -652,12 +652,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start____last_update
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "最近修改于"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__last_update
 msgid "Last Update"
-msgstr ""
+msgstr "最近更新"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__write_uid
@@ -677,7 +677,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__write_uid
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最近更新于"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__write_date
@@ -697,7 +697,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__write_date
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最近更新于"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_date_calculated__option__last_day_current_month
@@ -726,7 +726,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_main_attachment_id
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "主附件"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_object__type__many2one
@@ -746,7 +746,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_has_error
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "消息发送错误"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_ids
@@ -755,7 +755,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_ids
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "消息"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__model_id
@@ -789,7 +789,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_dynamic_form_filter
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_process_object_filter
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.view_note_bpm
@@ -815,7 +815,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_needaction_counter
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "动作数量"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_date_calculated__days
@@ -834,7 +834,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_has_error_counter
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "错误数"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_needaction_counter
@@ -843,7 +843,7 @@ msgstr ""
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_needaction_counter
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "需要处理的消息数"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_has_error_counter
@@ -852,7 +852,7 @@ msgstr ""
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__message_has_error_counter
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "发送失败的消息数"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__message_unread_counter
@@ -1051,17 +1051,17 @@ msgstr ""
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_group__type__processmaker2
 msgid "ProcessMaker2"
-msgstr ""
+msgstr "ProcessMaker2"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_group__type__processmaker3
 msgid "ProcessMaker3"
-msgstr ""
+msgstr "ProcessMaker3"
 
 #. module: syd_bpm
 #: model:ir.model.fields.selection,name:syd_bpm.selection__syd_bpm_process_group__type__processmaker4
 msgid "ProcessMaker4"
-msgstr ""
+msgstr "ProcessMaker4"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_category__process_ids
@@ -1098,7 +1098,7 @@ msgstr "记录ID"
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_has_sms_error
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "短消息发送失败"
 
 #. module: syd_bpm
 #: model_terms:ir.ui.view,arch_db:syd_bpm.process_todo_search_view
@@ -1276,7 +1276,7 @@ msgstr "触发器"
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_object__type
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__type
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_base_automation__state
@@ -1313,7 +1313,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_unread
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "未读消息"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_activity__message_unread_counter
@@ -1322,7 +1322,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__message_unread_counter
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "未读消息计数"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_base_automation__user_id
@@ -1332,7 +1332,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_start__user_id
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_task_executed__user_id
 msgid "User"
-msgstr ""
+msgstr "用户"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case__user_id
@@ -1348,7 +1348,7 @@ msgstr ""
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role__process_user_ids
 msgid "Users"
-msgstr ""
+msgstr "用户"
 
 #. module: syd_bpm
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_case_object__val_boolean
@@ -1402,7 +1402,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_group__website_message_ids
 #: model:ir.model.fields,field_description:syd_bpm.field_syd_bpm_process_role_activity__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "网站消息"
 
 #. module: syd_bpm
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_activity__website_message_ids
@@ -1411,4 +1411,4 @@ msgstr ""
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_group__website_message_ids
 #: model:ir.model.fields,help:syd_bpm.field_syd_bpm_process_role_activity__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "网站联系历史"
