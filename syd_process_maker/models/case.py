@@ -32,23 +32,25 @@ class Case(models.Model):
         for record in self:
             record.is_assigned_to = bool(record.pm_assigned_to.id == self.env.uid)
 
+    @api.model
     def create(self, vals):
         case =  super(Case, self).create(vals)
-        _vals = {
-            "res_name": "",
-            "date_deadline": case.date_deadline,
-            "activity_type_id": self.env['ir.model.data']._xmlid_to_res_id('mail.mail_activity_data_todo', raise_if_not_found=False),
-            "user_id": case.pm_assigned_to.id,
-            "summary": "",
-            "res_id": int(case.related_id),
-            "res_model_id": self.env['ir.model'].search([('model', '=', case.related_model)]).id
-        }
-        if case.activity_id and "-" in case.activity_id.name:
-            _vals.update({"res_name": case.activity_id.name.split('-')[1]})
-        
-        activity = self.env['mail.activity'].create(_vals)
-        print(activity)
-        case.write({'odoo_activity_id': activity.id})
+        if case.related_model:
+            _vals = {
+                "res_name": "",
+                "date_deadline": case.date_deadline,
+                "activity_type_id": self.env['ir.model.data']._xmlid_to_res_id('mail.mail_activity_data_todo', raise_if_not_found=False),
+                "user_id": case.pm_assigned_to.id,
+                "summary": "",
+                "res_id": int(case.related_id),
+                "res_model_id": self.env['ir.model'].search([('model', '=', case.related_model)]).id
+            }
+            if case.activity_id and "-" in case.activity_id.name:
+                _vals.update({"res_name": case.activity_id.name.split('-')[1]})
+            
+            activity = self.env['mail.activity'].create(_vals)
+            print(activity)
+            case.write({'odoo_activity_id': activity.id})
         return case
 
 

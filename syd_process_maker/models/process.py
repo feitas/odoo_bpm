@@ -262,7 +262,7 @@ class ProcessGroup(BPMInterface,models.Model):
         par = {'process_id': int(pm_process_id), 'event': 'node_1'}
         res = self._call(f'process_events/{pm_process_id}', query_param=par, method='POST')
         process_id.name = res['name']
-        # FIXME? 为什么要存储
+        # Synchronous the process data when create a request
         process_id.pm_process_id = res.get('process_id')
         _process_dict = res.get('process')
         if _process_dict:
@@ -512,13 +512,10 @@ class Process(models.Model):
 
     def _create_dynamic_form_from_parsed_files(self):
         """
-        TODO 解析下载的process json文件，写到Dynamic Form
+        Write the json data to the 'Dynamic Form'
         """
-        # 2.创建Dynamic Form记录来存放Screen，Name->Screen Name,添加一个字段Element Name
-        # Name->Screen Name,ID->Screen ID
         if self.export_data and isinstance(self.export_data, str):
             _data_dict = json.loads(self.export_data)
-            _logger.warning(_data_dict)
             _screen_list = _data_dict.get('screens')
             for _screen in _screen_list:
                 _screen_record = self.env['syd_bpm.dynamic_form'].search([('pm_screen_id','=',_screen.get('id')),('name','=',_screen.get('config')[0].get('name'))])
