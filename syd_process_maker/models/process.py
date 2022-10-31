@@ -532,13 +532,14 @@ class Process(models.Model):
                     _item_list = _screen.get('config')[0].get('items')
                     _item_val = []
                     for _item in _item_list:
-                        _item_val.append((0, 0, {
-                            'name':_item.get('config').get('name'),
-                            'dynamic_form_id':_screen_record.id,
-                            'pm_screen_item_name':_item.get('config').get('name'),
-                            'pm_screen_item_label':_item.get('config').get('label'),
-                            'pm_screen_item_type':_item.get('config').get('type')
-                        }))
+                        if _item.get('component') and _item.get('component') not in ['FormButton','FormNestedScreen']:
+                            _item_val.append((0, 0, {
+                                'name':_item.get('config').get('name'),
+                                'dynamic_form_id':_screen_record.id,
+                                'pm_screen_item_name':_item.get('config').get('name'),
+                                'pm_screen_item_label':_item.get('config').get('label'),
+                                'pm_screen_item_type':_item.get('config').get('type')
+                            }))
                     _screen_record.write({'dynamic_form_items':_item_val})
                 else:
                     _screen_record.name = _screen.get('config')[0].get('name')

@@ -63,7 +63,7 @@ class MailActivityExt(models.Model):
                 if not pm_case:
                     raise UserError("找不到相应的工作流任务！")
                     
-                pm_case.confirm_case(result=activity.bpm_action)
+                pm_case.confirm_case(upload_data={'result':activity.bpm_action})
 
             # post message on activity, before deleting it
             record = self.env[activity.res_model].browse(activity.res_id)
@@ -107,8 +107,7 @@ class MailActivityExt(models.Model):
                     pm_case = self.env['syd_bpm.case'].search([('odoo_activity_id', '=', activity.id)])
                     if not pm_case:
                         raise UserError("找不到相应的工作流任务！")
-                    
-                    pm_case.confirm_case(result='refuse')
+                    pm_case.confirm_case(upload_data={'result':'refuse'})
                 
                     # post message on activity, before deleting it
                     record = self.env[activity.res_model].browse(activity.res_id)
