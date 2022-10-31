@@ -58,16 +58,11 @@ class Case(models.Model):
         """
         /tasks/{task_id} Update a task
         """
-        if not upload_data:
-            upload_data={}
-        _result = upload_data.get('result')
-
         if not self.process_id:
             raise UserError("没有相应的流程!")
         if not self.pm_case_id:
             raise UserError("没有相应的任务!")
-        if _result and _result not in ['pass', 'refuse']:
-            raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
+
         if not self.process_id.dynamic_form_ids and len(self.process_id.dynamic_form_ids) == 0:
             raise UserError("没有相应的Screen!")
         if not self.process_id.dynamic_form_ids[0] and len(self.process_id.dynamic_form_ids[0].dynamic_form_items) == 0:
@@ -78,11 +73,20 @@ class Case(models.Model):
         _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
         if _related_record.order_line and len(_related_record.order_line)>0:
             _total = sum(_related_record.order_line.mapped('price_subtotal'))
-        upload_data.update({_screen_item_record.pm_screen_item_name:int(_total)})
+
+        if not upload_data:
+            upload_data={}
+            upload_data.update({_screen_item_record.pm_screen_item_name:int(_total)})
+        _result = upload_data.get('result')
+        if _result and _result not in ['pass', 'refuse']:
+            raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
+
         _data = {
             "status": "COMPLETED",
             "data": upload_data
         }
+        _logger.warning(self.pm_case_id)
+        _logger.warning(_data)
         res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
         if res:
             if res.get('status') and res.get('status')=='CLOSED':
@@ -91,9 +95,9 @@ class Case(models.Model):
                 'process_request_id': int(self.activity_id.pm_activity_id)
             }
             pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
+            _logger.warning(pm_tasks)
             if pm_tasks.get('data'):
                 for item in pm_tasks.get('data'):
-                    print(item)
                     _domain = [
                         ('pm_case_id', '=', item.get('id')),
                     ]
