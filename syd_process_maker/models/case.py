@@ -39,7 +39,7 @@ class Case(models.Model):
             _vals = {
                 "res_name": "",
                 "date_deadline": case.date_deadline,
-                "activity_type_id": self.env['ir.model.data']._xmlid_to_res_id('mail.mail_activity_data_todo', raise_if_not_found=False),
+                "activity_type_id": self.env['ir.model.data']._xmlid_to_res_id('syd_process_maker.mail_activity_type_process', raise_if_not_found=False),
                 "user_id": case.pm_assigned_to.id,
                 "summary": "",
                 "res_id": int(case.related_id),
@@ -48,9 +48,9 @@ class Case(models.Model):
             if case.activity_id and "-" in case.activity_id.name:
                 _vals.update({"res_name": case.activity_id.name.split('-')[1]})
             
-            activity = self.env['mail.activity'].create(_vals)
+            activity = self.env['mail.activity'].sudo().create(_vals)
             print(activity)
-            case.write({'odoo_activity_id': activity.id})
+            case.sudo().write({'odoo_activity_id': activity.id})
         return case
 
 
@@ -76,7 +76,9 @@ class Case(models.Model):
 
         if not upload_data:
             upload_data={}
-            upload_data.update({_screen_item_record.pm_screen_item_name:int(_total)})
+
+        upload_data.update({_screen_item_record.pm_screen_item_name:int(_total)})
+
         _result = upload_data.get('result')
         if _result and _result not in ['pass', 'refuse']:
             raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
