@@ -76,7 +76,9 @@ class Case(models.Model):
 
         if not upload_data:
             upload_data={}
+
         upload_data.update({_screen_item_record.pm_screen_item_name:int(_total)})
+
         _result = upload_data.get('result')
         if _result and _result not in ['pass', 'refuse']:
             raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
@@ -85,6 +87,8 @@ class Case(models.Model):
             "status": "COMPLETED",
             "data": upload_data
         }
+        _logger.warning(self.pm_case_id)
+        _logger.warning(_data)
         res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
         if res:
             if res.get('status') and res.get('status')=='CLOSED':
