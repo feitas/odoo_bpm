@@ -300,7 +300,7 @@ class ProcessGroup(BPMInterface,models.Model):
             'process_request_id': request_id.pm_activity_id
         }
         pm_tasks = self._call(f'tasks', params, method='GET')
-        # pprint(pm_tasks)
+        pprint(pm_tasks)
         if pm_tasks.get('data'):
             for item in pm_tasks.get('data'):
                 _domain = [
@@ -310,7 +310,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 if not task:
                     _state='in_progress'
                     if item.get('user_id'):
-                        user_id=self.env['res.users'].search([('id','=',item.get('user_id'))])
+                        user_id=self.env['res.users'].search([('pm_user_id','=',item.get('user_id'))])
                     if item.get('status') and item.get('status')=='CLOSED':
                         _state = 'cancelled'
                     elif item.get('status') and item.get('status')=='COMPLETED':
