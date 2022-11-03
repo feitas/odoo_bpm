@@ -139,12 +139,18 @@ class ProcessGroup(BPMInterface,models.Model):
         
     @api.model
     def _get_user_list(self):
-        user_definition = self._call('users')
+        par = {'per_page': 10000}
+        user_definition = self._call('users', par)
         return user_definition['data']
         
     @api.model
     def _get_export_data_url(self,process_id):
         url_definition = self._call(f'processes/{int(process_id)}/export', method='POST')
+        return url_definition
+
+    @api.model
+    def _get_srceen(self,screen_id):
+        url_definition = self._call(f'screens/{int(screen_id)}')
         return url_definition
 
     @api.model
@@ -404,7 +410,7 @@ class ProcessGroup(BPMInterface,models.Model):
                 role_id = self.env['syd_bpm.process_role'].get_or_create_process_role(role['name'])
                 role_id.pm_group_id = role.get("id")
             pm_user_name_list = [user['username'] for user in user_list]
-            odoo_user_list = self.env['res.users'].search([])
+            odoo_user_list = self.env['res.users'].search([('groups_id', 'in', self.env.ref('base.group_user').ids)])
             odoo_user_name_list = [user.name for user in odoo_user_list]
             upgrade_val = []
             for odoo_user in odoo_user_list:
@@ -516,19 +522,21 @@ class Process(models.Model):
         """
         if self.export_data and isinstance(self.export_data, str):
             _data_dict = json.loads(self.export_data)
-            _screen_list = _data_dict.get('screens')
-            for _screen in _screen_list:
-                _screen_record = self.env['syd_bpm.dynamic_form'].search([('pm_screen_id','=',_screen.get('id')),('name','=',_screen.get('config')[0].get('name'))])
+            _bpm_str = _data_dict['process'].get('bpmn')
+            _bpm = _bpm_str.encode("utf-8")
+            import xml.dom.minidom
+            content = xml.dom.minidom.parseString(_bpm)
+            for element in content.getElementsByTagName('bpmn:task'):
+                _screen_record = self.env['syd_bpm.dynamic_form'].search([('pm_screen_node_name','=',element.getAttribute("id")),('pm_screen_id','=',element.getAttribute("pm:screenRef")),('name','=',element.getAttribute("name"))])
                 if not _screen_record:
                     _val = {
-                        'pm_screen_id': _screen.get('id'),
-                        'name': _screen.get('config')[0].get('name'),
+                        'pm_screen_id': element.getAttribute("pm:screenRef"),
+                        'name': element.getAttribute("name"),
                         'process_id':self.id,
-                        'pm_screen_label': _screen.get('title'),
-                        'pm_screen_type':_screen.get('type'),
-                        'note': _screen.get('title')
+                        'pm_screen_node_name': element.getAttribute("id")
                     }
                     _screen_record = self.env['syd_bpm.dynamic_form'].create(_val)
+                    _screen = self.process_group_id._get_srceen(element.getAttribute("pm:screenRef"))
                     _item_list = _screen.get('config')[0].get('items')
                     _item_val = []
                     for _item in _item_list:
@@ -542,10 +550,9 @@ class Process(models.Model):
                             }))
                     _screen_record.write({'dynamic_form_items':_item_val})
                 else:
-                    _screen_record.name = _screen.get('config')[0].get('name')
-                    _screen_record.pm_screen_label = _screen.get('title')
-                    _screen_record.pm_screen_type = _screen.get('type')
-
+                    _screen_record.name = element.getAttribute("name")
+                    _screen_record.pm_screen_id = element.getAttribute("pm:screenRef")
+                    _screen_record.pm_screen_node_name = element.getAttribute("id")
 
     def button_get_process_export_json(self):
         self._get_process_export_json()

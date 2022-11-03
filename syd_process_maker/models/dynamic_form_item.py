@@ -13,10 +13,9 @@ class DynamicFormExt(models.Model):
 
     # For Process Maker
     dynamic_form_items = fields.One2many('syd_bpm.dynamic_form_item','dynamic_form_id')
+    pm_screen_node_name = fields.Char('PM Screen Node Name')
     pm_screen_id = fields.Char('PM Screen Id')
     pm_screen_name = fields.Char('PM Screen Name')
-    pm_screen_label = fields.Char('PM Screen Label')
-    pm_screen_type = fields.Char('PM Screen Type')
 
 
 class DynamicFormItems(models.Model):

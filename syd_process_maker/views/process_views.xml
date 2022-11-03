@@ -23,8 +23,7 @@
                             <field name="name"/>
                             <field name="process_id"/>
                             <field name="pm_screen_id"/>
-                            <field name="pm_screen_label"/>
-                            <field name="pm_screen_type"/>
+                            <field name="pm_screen_node_name"/>
                         </tree>
                     </field>
                 </field>
