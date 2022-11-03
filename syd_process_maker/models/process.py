@@ -311,6 +311,8 @@ class ProcessGroup(BPMInterface,models.Model):
                     _state='in_progress'
                     if item.get('user_id'):
                         user_id=self.env['res.users'].search([('pm_user_id','=',item.get('user_id'))])
+                        if not user_id:
+                            user_id = self.env['res.users'].search([], limit=1)
                     if item.get('status') and item.get('status')=='CLOSED':
                         _state = 'cancelled'
                     elif item.get('status') and item.get('status')=='COMPLETED':
@@ -329,9 +331,7 @@ class ProcessGroup(BPMInterface,models.Model):
                         'pm_element_name': item.get('element_name'),
                         'date_deadline': TimeConverterDate(item.get("due_at")),
                     }
-                    _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
-                    if _user:
-                        _val.update({'pm_assigned_to': _user.id})
+
                     self.env['syd_bpm.case'].create(_val)
         else:
             _logger.error(pm_tasks)
