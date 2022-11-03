@@ -68,24 +68,27 @@ class Case(models.Model):
         if not self.process_id.dynamic_form_ids[0] and len(self.process_id.dynamic_form_ids[0].dynamic_form_items) == 0:
             raise UserError("没有相应的Screen Item!")
 
-        _screen_record = self.env['syd_bpm.dynamic_form'].search([('id','=',int(self.process_id.dynamic_form_ids[0]))])
-        _screen_item_record = self.env['syd_bpm.dynamic_form_item'].search([('id','=',int(self.process_id.dynamic_form_ids[0].dynamic_form_items[0]))])
-        _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
-        if _related_record.order_line and len(_related_record.order_line)>0:
-            _total = sum(_related_record.order_line.mapped('price_subtotal'))
-
-        if not upload_data:
-            upload_data={}
-
-        upload_data.update({_screen_item_record.pm_screen_item_name:int(_total)})
-
         _result = upload_data.get('result')
         if _result and _result not in ['pass', 'refuse']:
             raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
 
+        # FIXME：  case -> process_id -> dynamic_form_ids.filtered( name = name )
+        # FXIME: 暂时不支持使用明细行模型的字段， PM上应该写   order_line.price_subtotal   我们判断是否有点号，有的话还得根据order_line这个字段的类型进行判断
+        form_datas = {}
+        dynamic_form_item = self.process_id.dynamic_form_ids.filtered(lambda d: d.name == self.pm_element_name)
+        if len(dynamic_form_item) == 1:
+            _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
+
+            for item in dynamic_form_item.dynamic_form_items:
+                if _related_record.get(item.pm_screen_item_name):
+                    form_datas.update({item.pm_screen_item_name: _related_record.get(item.pm_screen_item_name)})
+                
+                if item in upload_data:
+                    form_datas.update({item: upload_data[item]})
+
         _data = {
             "status": "COMPLETED",
-            "data": upload_data
+            "data": form_datas
         }
         _logger.warning(self.pm_case_id)
         _logger.warning(_data)
