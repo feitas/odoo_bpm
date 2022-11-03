@@ -2,6 +2,7 @@ odoo.define('syd_process_maker.FormController', function (require) {
     "use strict";
 
     var core = require('web.core');
+    const Dialog = require('web.Dialog');
     var FormController = require('web.FormController');
 
     var _t = core._t;
