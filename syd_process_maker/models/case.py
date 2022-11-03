@@ -63,10 +63,10 @@ class Case(models.Model):
         if not self.pm_case_id:
             raise UserError("没有相应的任务!")
 
-        if not self.process_id.dynamic_form_ids and len(self.process_id.dynamic_form_ids) == 0:
-            raise UserError("没有相应的Screen!")
-        if not self.process_id.dynamic_form_ids[0] and len(self.process_id.dynamic_form_ids[0].dynamic_form_items) == 0:
-            raise UserError("没有相应的Screen Item!")
+        # if not self.process_id.dynamic_form_ids and len(self.process_id.dynamic_form_ids) == 0:
+        #     raise UserError("没有相应的Screen!")
+        # if not self.process_id.dynamic_form_ids[0] and len(self.process_id.dynamic_form_ids[0].dynamic_form_items) == 0:
+        #     raise UserError("没有相应的Screen Item!")
 
         _result = upload_data.get('result')
         if _result and _result not in ['pass', 'refuse']:
@@ -80,8 +80,8 @@ class Case(models.Model):
             _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
 
             for item in dynamic_form_item.dynamic_form_items:
-                if _related_record.get(item.pm_screen_item_name):
-                    form_datas.update({item.pm_screen_item_name: _related_record.get(item.pm_screen_item_name)})
+                if _related_record[item.pm_screen_item_name]:
+                    form_datas.update({item.pm_screen_item_name: _related_record[item.pm_screen_item_name]})
                 
                 if item in upload_data:
                     form_datas.update({item: upload_data[item]})
@@ -122,6 +122,7 @@ class Case(models.Model):
                             'related_id':int(self.related_id) if isinstance(self.related_id, int) else str(self.related_id),
                             'state':_state,
                             'date_deadline': TimeConverterDate(item.get("due_at")),
+                            'pm_element_name': item.get('element_name'),
                         }
                         _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
 
