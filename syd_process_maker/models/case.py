@@ -123,7 +123,6 @@ class Case(models.Model):
                             'pm_element_name': item.get('element_name'),
                         }
                         _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
-                        _logger.error(_user)
                         if _user:
                             _val.update({'pm_assigned_to': _user.id})
                         else:
