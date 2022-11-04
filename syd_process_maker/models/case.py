@@ -77,9 +77,9 @@ class Case(models.Model):
         dynamic_form_item = self.process_id.dynamic_form_ids.filtered(lambda d: d.name == self.pm_element_name)
         if len(dynamic_form_item) == 1:
             if self.related_model and self.related_id:
-                _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
+                _related_record = self.env[self.related_model].sudo().search([('id','=',int(self.related_id))])
                 if _related_record:
-                    _related_fields = self.env['ir.model.fields'].search([('model','=',self.related_model)])
+                    _related_fields = self.env['ir.model.fields'].sudo().search([('model','=',self.related_model)])
                     _related_field_names = [_field.name for _field in _related_fields]
                     for item in dynamic_form_item.dynamic_form_items:
                         if item.pm_screen_item_name in _related_field_names:
