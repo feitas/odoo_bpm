@@ -72,25 +72,25 @@ class Case(models.Model):
         if _result and _result not in ['pass', 'refuse']:
             raise ValidationError("审批结论传值错误，必须是pass或者refuse！")
 
-        # FIXME：  case -> process_id -> dynamic_form_ids.filtered( name = name )
         # FXIME: 暂时不支持使用明细行模型的字段， PM上应该写   order_line.price_subtotal   我们判断是否有点号，有的话还得根据order_line这个字段的类型进行判断
         form_datas = {}
         dynamic_form_item = self.process_id.dynamic_form_ids.filtered(lambda d: d.name == self.pm_element_name)
         if len(dynamic_form_item) == 1:
-            _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
-
-            for item in dynamic_form_item.dynamic_form_items:
-                if _related_record[item.pm_screen_item_name]:
-                    form_datas.update({item.pm_screen_item_name: _related_record[item.pm_screen_item_name]})
-                
-                if item in upload_data:
-                    form_datas.update({item: upload_data[item]})
-
+            if self.related_model and self.related_id:
+                _related_record = self.env[self.related_model].search([('id','=',int(self.related_id))])
+                if _related_record:
+                    _related_fields = self.env['ir.model.fields'].search([('model','=',self.related_model)])
+                    _related_field_names = [_field.name for _field in _related_fields]
+                    for item in dynamic_form_item.dynamic_form_items:
+                        if item.pm_screen_item_name in _related_field_names:
+                            if _related_record[item.pm_screen_item_name]:
+                                form_datas.update({item.pm_screen_item_name: _related_record[item.pm_screen_item_name]})
+                        if item in upload_data:
+                            form_datas.update({item: upload_data[item]})
         _data = {
             "status": "COMPLETED",
             "data": form_datas
         }
-        _logger.warning(self.pm_case_id)
         _logger.warning(_data)
         res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
         if res:
