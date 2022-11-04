@@ -43,7 +43,7 @@ class Case(models.Model):
                 "user_id": case.pm_assigned_to.id,
                 "summary": "",
                 "res_id": int(case.related_id),
-                "res_model_id": self.env['ir.model'].search([('model', '=', case.related_model)]).id
+                "res_model_id": self.env['ir.model'].sudo().search([('model', '=', case.related_model)]).id
             }
             if case.activity_id and "-" in case.activity_id.name:
                 _vals.update({"res_name": case.activity_id.name.split('-')[1]})
@@ -85,13 +85,12 @@ class Case(models.Model):
                         if item.pm_screen_item_name in _related_field_names:
                             if _related_record[item.pm_screen_item_name]:
                                 form_datas.update({item.pm_screen_item_name: _related_record[item.pm_screen_item_name]})
-                        if item in upload_data:
-                            form_datas.update({item: upload_data[item]})
+                        if item.pm_screen_item_name in upload_data.keys():
+                            form_datas.update({item.pm_screen_item_name: upload_data[item.pm_screen_item_name]})
         _data = {
             "status": "COMPLETED",
             "data": form_datas
         }
-        _logger.warning(_data)
         res = self.process_id.process_group_id._call(f'tasks/{self.pm_case_id}', jsonobject=json.dumps(_data), method='PUT')
         if res:
             if res.get('status') and res.get('status')=='CLOSED':
@@ -100,7 +99,6 @@ class Case(models.Model):
                 'process_request_id': int(self.activity_id.pm_activity_id)
             }
             pm_tasks = self.process_id.process_group_id._call('tasks', params, method='GET')
-            _logger.warning(pm_tasks)
             if pm_tasks.get('data'):
                 for item in pm_tasks.get('data'):
                     _domain = [
@@ -125,7 +123,6 @@ class Case(models.Model):
                             'pm_element_name': item.get('element_name'),
                         }
                         _user = self.env['res.users'].search([('pm_user_id', '=', item.get('user_id'))])
-
                         if _user:
                             _val.update({'pm_assigned_to': _user.id})
                         else:

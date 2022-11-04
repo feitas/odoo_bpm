@@ -66,7 +66,7 @@ class MailActivityExt(models.Model):
                 pm_case.confirm_case(upload_data={'result':activity.bpm_action})
 
             # post message on activity, before deleting it
-            record = self.env[activity.res_model].browse(activity.res_id)
+            record = self.env[activity.res_model].sudo().browse(activity.res_id)
             record.message_post_with_view(
                 'mail.message_activity_done',
                 values={
