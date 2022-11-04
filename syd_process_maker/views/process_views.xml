@@ -19,7 +19,7 @@
                 </field>
                 <field name="dynamic_form_ids" position="replace">
                     <field name="dynamic_form_ids">
-                        <tree string="Screens" editable="bottom">
+                        <tree string="Screens">
                             <field name="name"/>
                             <field name="process_id"/>
                             <field name="pm_screen_id"/>
